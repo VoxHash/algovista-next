@@ -1,6 +1,6 @@
 import './globals.css';
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
+import { getMessages, getLocale } from 'next-intl/server';
 import HtmlLangSetter from '@/components/HtmlLangSetter';
 import type { Metadata } from "next";
 
@@ -18,10 +18,11 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const locale = await getLocale();
   const messages = await getMessages();
 
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body>
         <NextIntlClientProvider messages={messages}>
           <HtmlLangSetter />
