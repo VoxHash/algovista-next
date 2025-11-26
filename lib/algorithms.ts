@@ -893,7 +893,7 @@ export function* suffixArraySteps(text: string, pat: string): Generator<any> {
     
     for (let k = 2; k < n; k *= 2) {
       let rank = 0;
-      const prevRank = suffixes[0].rank[0];
+      let prevRank = suffixes[0].rank[0];
       suffixes[0].rank[0] = rank;
       const ind = Array(n).fill(0);
       ind[suffixes[0].index] = 0;
@@ -924,7 +924,7 @@ export function* suffixArraySteps(text: string, pat: string): Generator<any> {
   
   let left = 0, right = text.length - 1;
   while (left <= right) {
-    const mid = Math.floor((left + right) / 2);
+    let mid = Math.floor((left + right) / 2);
     const suffix = suffixArray[mid];
     yield { type: "compare", i: suffix, j: 0 };
     
