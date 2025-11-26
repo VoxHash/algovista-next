@@ -7,9 +7,7 @@ const nextConfig = {
   reactStrictMode: true,
   experimental: { typedRoutes: true },
   // Ensure proper routing on Vercel
-  trailingSlash: false,
-  // Skip static generation of not-found page
-  output: 'standalone'
+  trailingSlash: false
 };
 
 export default withNextIntl(nextConfig);
