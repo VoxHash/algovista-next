@@ -36,31 +36,8 @@ export default function LanguageSwitcher() {
     if (typeof window !== 'undefined') {
       localStorage.setItem('locale', newLocale);
     }
-    
-    // Handle 'as-needed' locale prefix strategy
-    // Default locale (en) has no prefix, others do
-    const defaultLocale = 'en';
-    let newPath: string;
-    
-    if (locale === defaultLocale) {
-      // Currently on default locale (no prefix)
-      if (newLocale === defaultLocale) {
-        newPath = pathname; // Stay on same path
-      } else {
-        // Switch to non-default locale: add prefix
-        newPath = `/${newLocale}${pathname === '/' ? '' : pathname}`;
-      }
-    } else {
-      // Currently on non-default locale (has prefix)
-      if (newLocale === defaultLocale) {
-        // Switch to default locale: remove prefix
-        newPath = pathname.replace(`/${locale}`, '') || '/';
-      } else {
-        // Switch between non-default locales: replace prefix
-        newPath = pathname.replace(`/${locale}`, `/${newLocale}`);
-      }
-    }
-    
+    // With 'always' locale prefix, all locales have prefixes
+    const newPath = pathname.replace(`/${locale}`, `/${newLocale}`);
     router.push(newPath as any);
     setIsOpen(false);
   };
