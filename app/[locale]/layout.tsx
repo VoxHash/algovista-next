@@ -9,6 +9,10 @@ export const metadata: Metadata = {
   description: "Interactive visualizer by VoxHash",
 };
 
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
+
 // Force dynamic rendering - routes generated on-demand
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
