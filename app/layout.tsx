@@ -1,5 +1,4 @@
 import './globals.css';
-import HtmlLangSetter from '@/components/HtmlLangSetter';
 
 export default function RootLayout({
   children,
@@ -9,7 +8,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <HtmlLangSetter />
         {children}
       </body>
     </html>

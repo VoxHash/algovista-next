@@ -1,7 +1,7 @@
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { locales } from '@/i18n';
+import HtmlLangSetter from '@/components/HtmlLangSetter';
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -28,25 +28,25 @@ export default async function LocaleLayout({
   }
 
   // Load messages directly from locale parameter
-  // With localePrefix never, getMessages() may not have locale context
-  // So we load messages directly based on the locale from params
+  // With localePrefix never, we can't rely on getMessages() context
   let messages;
   try {
     messages = (await import(`@/messages/${locale}.json`)).default;
   } catch (error) {
-    // If import fails, try getMessages as fallback
-    try {
-      messages = await getMessages();
-    } catch (getMessagesError) {
-      // If both fail, use empty messages
-      messages = {};
-    }
+    // If import fails, use empty messages
+    console.error(`Failed to load messages for locale ${locale}:`, error);
+    messages = {};
   }
 
   return (
-    <NextIntlClientProvider messages={messages} locale={locale}>
-      {children}
-    </NextIntlClientProvider>
+    <html lang={locale}>
+      <body>
+        <HtmlLangSetter />
+        <NextIntlClientProvider messages={messages} locale={locale}>
+          {children}
+        </NextIntlClientProvider>
+      </body>
+    </html>
   );
 }
 
