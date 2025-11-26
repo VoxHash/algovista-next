@@ -27,18 +27,18 @@ export default async function LocaleLayout({
     notFound();
   }
 
-  // Use try-catch for getMessages in case of build-time issues
-  // With localePrefix never, getMessages should get locale from middleware context
+  // Load messages directly from locale parameter
+  // With localePrefix never, getMessages() may not have locale context
+  // So we load messages directly based on the locale from params
   let messages;
   try {
-    // Try to get messages - if it fails, fallback to empty
-    messages = await getMessages();
+    messages = (await import(`@/messages/${locale}.json`)).default;
   } catch (error) {
-    // If getMessages fails, try to load messages directly
+    // If import fails, try getMessages as fallback
     try {
-      messages = (await import(`@/messages/${locale}.json`)).default;
-    } catch (importError) {
-      // If import also fails, use empty messages
+      messages = await getMessages();
+    } catch (getMessagesError) {
+      // If both fail, use empty messages
       messages = {};
     }
   }
