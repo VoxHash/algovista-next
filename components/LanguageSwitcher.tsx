@@ -2,7 +2,7 @@
 
 import { useLocale } from 'next-intl';
 import { useRouter, usePathname } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Globe } from 'lucide-react';
 
@@ -26,16 +26,7 @@ export default function LanguageSwitcher() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('locale', locale);
-    }
-  }, [locale]);
-
   const switchLanguage = (newLocale: string) => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('locale', newLocale);
-    }
     // With 'always' locale prefix, all locales have prefixes
     const newPath = pathname.replace(`/${locale}`, `/${newLocale}`);
     router.push(newPath as any);

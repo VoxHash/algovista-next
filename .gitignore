@@ -11,24 +11,15 @@ lerna-debug.log*
 out/
 build/
 dist/
+*.tsbuildinfo
+next-env.d.ts
 
-# Production
-/build
-
-# Misc
-.DS_Store
-*.pem
-
-# Local env files
+# Environment variables
 .env*.local
 .env
 
 # Vercel
 .vercel
-
-# TypeScript
-*.tsbuildinfo
-next-env.d.ts
 
 # IDE
 .vscode/
@@ -37,6 +28,7 @@ next-env.d.ts
 *.swo
 
 # OS
+.DS_Store
 Thumbs.db
 
 # Testing
@@ -53,31 +45,20 @@ pids
 *.seed
 *.pid.lock
 
-# Optional npm cache directory
+# Cache
 .npm
-
-# Optional eslint cache
 .eslintcache
-
-# Microbundle cache
+.cache
+.parcel-cache
 .rpt2_cache/
 .rts2_cache_cjs/
 .rts2_cache_es/
 .rts2_cache_umd/
 
-# Optional REPL history
-.node_repl_history
-
-# Output of 'npm pack'
+# Misc
+*.pem
 *.tgz
-
-# Yarn Integrity file
 .yarn-integrity
-
-# parcel-bundler cache
-.cache
-.parcel-cache
-
-# Temporary folders
+.node_repl_history
 tmp/
 temp/

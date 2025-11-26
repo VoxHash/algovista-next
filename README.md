@@ -81,7 +81,7 @@ AlgoVista supports 11 languages with full i18n:
 - 🇰🇷 Korean (한국어)
 - 🇮🇩 Indonesian (Bahasa Indonesia)
 
-Language selection is persisted in localStorage and the UI automatically adapts to the selected language.
+Users can switch languages using the language selector in the header. The UI automatically adapts to the selected language.
 
 ## 🏗️ Project Structure
 
