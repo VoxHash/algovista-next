@@ -5,6 +5,10 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
+// Disable static generation for this page to avoid prerender errors
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default function Page() {
   return <AlgoVista />;
 }
