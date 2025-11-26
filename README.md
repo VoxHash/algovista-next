@@ -1,6 +1,6 @@
 # AlgoVista — Algorithm Visualizer
 
-An interactive, resume-ready algorithm visualizer built with modern web technologies. Features real-time animations and step-by-step visualizations of fundamental computer science algorithms.
+An interactive, algorithm visualizer built with modern web technologies. Features real-time animations and step-by-step visualizations of fundamental computer science algorithms.
 
 [![GitHub stars](https://img.shields.io/github/stars/VoxHash/algovista-next?style=social)](https://github.com/VoxHash/algovista-next)
 [![GitHub forks](https://img.shields.io/github/forks/VoxHash/algovista-next?style=social)](https://github.com/VoxHash/algovista-next/fork)
