@@ -10,12 +10,14 @@ An interactive, resume-ready algorithm visualizer built with modern web technolo
 
 ## 🚀 Features
 
-- **Sorting Algorithms**: Quick Sort and Merge Sort with generator-driven animations
-- **Pathfinding**: Dijkstra's and A* algorithms on an interactive clickable grid
-- **String Matching**: Knuth-Morris-Pratt (KMP) algorithm with live LPS table visualization
+- **20+ Algorithms**: Comprehensive collection of sorting, pathfinding, and string matching algorithms
+  - **Sorting**: Quick Sort, Merge Sort, Bubble Sort, Insertion Sort, Selection Sort, Heap Sort, Radix Sort, Counting Sort, Bucket Sort, Shell Sort
+  - **Pathfinding**: Dijkstra's, A*, BFS, DFS
+  - **String Matching**: KMP, Rabin-Karp, Boyer-Moore, Z Algorithm, Naive String Matching
+- **Multi-language Support**: Full i18n with 11 languages (English, Russian, Portuguese, Spanish, Estonian, French, German, Japanese, Chinese, Korean, Indonesian)
 - **Real-time Performance**: Step-by-step execution with speed controls
-- **Interactive UI**: Clickable grids, customizable parameters, and responsive design
-- **Modern Stack**: Built with Next.js 14, TypeScript, Tailwind CSS, and Framer Motion
+- **Interactive UI**: Glassmorphism design, clickable grids, customizable parameters, and responsive design
+- **Modern Stack**: Built with Next.js 14, TypeScript, Tailwind CSS, Framer Motion, and next-intl
 
 ## 🛠️ Tech Stack
 
@@ -64,24 +66,61 @@ npm test
 - Merge Sort algorithm correctness  
 - KMP string matching LPS table generation
 
+## 🌍 Internationalization
+
+AlgoVista supports 11 languages with full i18n:
+- 🇺🇸 English
+- 🇷🇺 Russian (Русский)
+- 🇵🇹 Portuguese (Português)
+- 🇪🇸 Spanish (Español)
+- 🇪🇪 Estonian (Eesti)
+- 🇫🇷 French (Français)
+- 🇩🇪 German (Deutsch)
+- 🇯🇵 Japanese (日本語)
+- 🇨🇳 Chinese (中文)
+- 🇰🇷 Korean (한국어)
+- 🇮🇩 Indonesian (Bahasa Indonesia)
+
+Language selection is persisted in localStorage and the UI automatically adapts to the selected language.
+
 ## 🏗️ Project Structure
 
 ```
 algovista-next/
 ├── app/                    # Next.js App Router
-│   ├── globals.css        # Global styles
-│   ├── layout.tsx         # Root layout component
-│   └── page.tsx           # Main page (dynamically loads AlgoVista)
+│   ├── [locale]/          # Locale-based routing
+│   │   ├── layout.tsx     # Locale-aware layout
+│   │   └── page.tsx       # Main page
+│   ├── globals.css        # Global styles with glassmorphism
+│   ├── layout.tsx         # Root layout (redirects to /en)
+│   └── page.tsx           # Root page (redirects)
 ├── components/            # React components
 │   ├── AlgoVista.tsx     # Main visualizer component
+│   ├── LanguageSwitcher.tsx # i18n language switcher
 │   └── ui/               # Reusable UI primitives
 │       ├── button.tsx
 │       ├── card.tsx
 │       ├── slider.tsx
 │       ├── tabs.tsx
 │       └── tooltip.tsx
+├── lib/                   # Algorithm implementations
+│   └── algorithms.ts     # All algorithm generators
+├── messages/              # i18n translation files
+│   ├── en.json           # English
+│   ├── ru.json           # Russian
+│   ├── pt.json           # Portuguese
+│   ├── es.json           # Spanish
+│   ├── et.json           # Estonian
+│   ├── fr.json           # French
+│   ├── de.json           # German
+│   ├── ja.json           # Japanese
+│   ├── zh.json           # Chinese
+│   ├── ko.json           # Korean
+│   └── id.json           # Indonesian
 ├── __tests__/            # Test files
 │   └── algorithms.test.ts
+├── i18n.ts               # i18n configuration
+├── middleware.ts          # Next.js middleware for i18n
 ├── jest.config.cjs       # Jest configuration
 ├── tailwind.config.ts    # Tailwind CSS configuration
 └── tsconfig.json         # TypeScript configuration
@@ -119,16 +158,30 @@ CMD ["npm", "start"]
 
 ## 🎯 Algorithm Implementations
 
-### Sorting Algorithms
+### Sorting Algorithms (10)
 - **Quick Sort**: In-place sorting with pivot selection and partitioning
 - **Merge Sort**: Divide-and-conquer approach with stable sorting
+- **Bubble Sort**: Simple comparison-based sorting
+- **Insertion Sort**: Efficient for small datasets
+- **Selection Sort**: Simple in-place sorting
+- **Heap Sort**: Heap-based sorting with O(n log n) guarantee
+- **Radix Sort**: Non-comparison sorting by digits
+- **Counting Sort**: Integer sorting with range constraints
+- **Bucket Sort**: Distribution-based sorting
+- **Shell Sort**: Improved insertion sort with gaps
 
-### Pathfinding Algorithms  
+### Pathfinding Algorithms (4)
 - **Dijkstra's Algorithm**: Shortest path finding with priority queue
 - **A* Algorithm**: Heuristic-based pathfinding with Manhattan distance
+- **BFS**: Breadth-first search for unweighted graphs
+- **DFS**: Depth-first search exploration
 
-### String Matching
+### String Matching (5)
 - **KMP Algorithm**: Pattern matching with failure function optimization
+- **Rabin-Karp**: Rolling hash-based pattern matching
+- **Boyer-Moore**: Efficient pattern matching with bad character rule
+- **Z Algorithm**: Linear-time pattern matching
+- **Naive String Matching**: Simple brute-force approach
 
 ## 🎨 UI Features
 

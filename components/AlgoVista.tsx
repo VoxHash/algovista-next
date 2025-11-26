@@ -10,14 +10,33 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip as RTooltip } from "recharts";
+import { useTranslations } from 'next-intl';
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import * as algoLib from "@/lib/algorithms";
 
 const rand = (n: number, min = 5, max = 99) => Array.from({ length: n }, () => Math.floor(Math.random() * (max - min + 1)) + min);
 const BIGO: any = {
   quicksort: { best: "O(n log n)", avg: "O(n log n)", worst: "O(n^2)", space: "O(log n)" },
   mergesort: { best: "O(n log n)", avg: "O(n log n)", worst: "O(n log n)", space: "O(n)" },
+  bubblesort: { best: "O(n)", avg: "O(n²)", worst: "O(n²)", space: "O(1)" },
+  insertionsort: { best: "O(n)", avg: "O(n²)", worst: "O(n²)", space: "O(1)" },
+  selectionsort: { best: "O(n²)", avg: "O(n²)", worst: "O(n²)", space: "O(1)" },
+  heapsort: { best: "O(n log n)", avg: "O(n log n)", worst: "O(n log n)", space: "O(1)" },
+  radixsort: { best: "O(d(n+k))", avg: "O(d(n+k))", worst: "O(d(n+k))", space: "O(n+k)" },
+  countingsort: { best: "O(n+k)", avg: "O(n+k)", worst: "O(n+k)", space: "O(k)" },
+  bucketsort: { best: "O(n+k)", avg: "O(n+k)", worst: "O(n²)", space: "O(n)" },
+  shellsort: { best: "O(n log n)", avg: "O(n^1.3)", worst: "O(n²)", space: "O(1)" },
   dijkstra: { best: "O((V+E) log V)", avg: "O((V+E) log V)", worst: "O((V+E) log V)", space: "O(V)" },
   astar: { best: "O(E)", avg: "O(E)", worst: "O(E)", space: "O(V)" },
+  bfs: { best: "O(V+E)", avg: "O(V+E)", worst: "O(V+E)", space: "O(V)" },
+  dfs: { best: "O(V+E)", avg: "O(V+E)", worst: "O(V+E)", space: "O(V)" },
   kmp: { best: "O(n+m)", avg: "O(n+m)", worst: "O(n+m)", space: "O(m)" },
+  rabinkarp: { best: "O(n+m)", avg: "O(n+m)", worst: "O(nm)", space: "O(1)" },
+  boyermoore: { best: "O(n/m)", avg: "O(n)", worst: "O(nm)", space: "O(m)" },
+  zalgorithm: { best: "O(n+m)", avg: "O(n+m)", worst: "O(n+m)", space: "O(n+m)" },
+  naivestring: { best: "O(n)", avg: "O(nm)", worst: "O(nm)", space: "O(1)" },
+  binarysearch: { best: "O(1)", avg: "O(log n)", worst: "O(log n)", space: "O(1)" },
+  linearsearch: { best: "O(1)", avg: "O(n)", worst: "O(n)", space: "O(1)" },
 };
 
 function* quickSortSteps(arr: number[]): Generator<any> {
@@ -195,23 +214,24 @@ const Pill: React.FC<React.PropsWithChildren> = ({ children }) => (
 function ControlBar({ running, onPlay, onPause, onStep, onShuffle, speed, setSpeed, size, setSize }:
   { running:boolean, onPlay:()=>void, onPause:()=>void, onStep:()=>void, onShuffle:()=>void,
     speed:number, setSpeed:(n:number)=>void, size?:number, setSize?:(n:number)=>void }) {
+  const t = useTranslations('common');
   return (
     <div className="flex flex-wrap items-center gap-3 p-3 rounded-xl glass-light">
       <div className="flex items-center gap-2">
         <Button onClick={running ? onPause : onPlay} variant={running ? "secondary" : "default"}>
           {running ? <Pause className="mr-2 h-4 w-4"/> : <Play className="mr-2 h-4 w-4"/>}
-          {running ? "Pause" : "Play"}
+          {running ? t('pause') : t('play')}
         </Button>
-        <Button onClick={onStep} variant="outline"><StepForward className="mr-2 h-4 w-4"/>Step</Button>
-        <Button onClick={onShuffle} variant="ghost"><Shuffle className="mr-2 h-4 w-4"/>Shuffle</Button>
+        <Button onClick={onStep} variant="outline"><StepForward className="mr-2 h-4 w-4"/>{t('step')}</Button>
+        <Button onClick={onShuffle} variant="ghost"><Shuffle className="mr-2 h-4 w-4"/>{t('shuffle')}</Button>
       </div>
       <div className="flex items-center gap-2">
-        <span className="text-xs text-slate-300">Speed</span>
+        <span className="text-xs text-slate-300">{t('speed')}</span>
         <div className="w-36"><Slider value={[speed]} min={10} max={800} step={10} onValueChange={(v)=>v && v[0] !== undefined && setSpeed(v[0])}/></div>
       </div>
       {typeof size === 'number' && setSize && (
         <div className="flex items-center gap-2">
-          <span className="text-xs text-slate-300">Size</span>
+          <span className="text-xs text-slate-300">{t('size')}</span>
           <div className="w-36"><Slider value={[size]} min={5} max={80} step={1} onValueChange={(v)=>v && v[0] !== undefined && setSize(v[0])}/></div>
         </div>
       )}
@@ -221,7 +241,8 @@ function ControlBar({ running, onPlay, onPause, onStep, onShuffle, speed, setSpe
 
 // Sorting Panel
 function SortingPanel() {
-  const [algo, setAlgo] = useState<"quicksort"|"mergesort">("quicksort");
+  const t = useTranslations();
+  const [algo, setAlgo] = useState<"quicksort"|"mergesort"|"bubblesort"|"insertionsort"|"selectionsort"|"heapsort"|"radixsort"|"countingsort"|"bucketsort"|"shellsort">("quicksort");
   const [size, setSize] = useState(30);
   const [arr, setArr] = useState<number[]>(() => rand(30));
   const [gen, setGen] = useState<Generator<any> | null>(null);
@@ -233,7 +254,20 @@ function SortingPanel() {
   useEffect(()=>{ setArr(rand(size)); setOps([]); setHighlight({}); setRunning(false); setGen(null); }, [size]);
 
   const makeGen = () => {
-    const g = algo === "quicksort" ? quickSortSteps(arr) : mergeSortSteps(arr);
+    let g: Generator<any>;
+    switch(algo) {
+      case "quicksort": g = quickSortSteps(arr); break;
+      case "mergesort": g = mergeSortSteps(arr); break;
+      case "bubblesort": g = algoLib.bubbleSortSteps(arr); break;
+      case "insertionsort": g = algoLib.insertionSortSteps(arr); break;
+      case "selectionsort": g = algoLib.selectionSortSteps(arr); break;
+      case "heapsort": g = algoLib.heapSortSteps(arr); break;
+      case "radixsort": g = algoLib.radixSortSteps(arr); break;
+      case "countingsort": g = algoLib.countingSortSteps(arr); break;
+      case "bucketsort": g = algoLib.bucketSortSteps(arr); break;
+      case "shellsort": g = algoLib.shellSortSteps(arr); break;
+      default: g = quickSortSteps(arr);
+    }
     setGen(g);
   };
 
@@ -272,14 +306,22 @@ function SortingPanel() {
       <CardHeader className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-3">
           <ListOrdered className="h-5 w-5 text-indigo-400 drop-shadow-lg"/>
-          <CardTitle className="text-indigo-100">Sorting</CardTitle>
-          <Pill>{algo === 'quicksort' ? 'Quick Sort' : 'Merge Sort'}</Pill>
+          <CardTitle className="text-indigo-100">{t('sorting.title')}</CardTitle>
+          <Pill>{t(`algorithms.${algo}`)}</Pill>
         </div>
         <div className="flex items-center gap-2">
           <Tabs value={algo} onValueChange={setAlgo} >
-            <TabsList>
-              <TabsTrigger value="quicksort">Quick</TabsTrigger>
-              <TabsTrigger value="mergesort">Merge</TabsTrigger>
+            <TabsList className="max-w-full overflow-x-auto">
+              <TabsTrigger value="quicksort">{t('sorting.quick')}</TabsTrigger>
+              <TabsTrigger value="mergesort">{t('sorting.merge')}</TabsTrigger>
+              <TabsTrigger value="bubblesort">{t('algorithms.bubbleSort')}</TabsTrigger>
+              <TabsTrigger value="insertionsort">{t('algorithms.insertionSort')}</TabsTrigger>
+              <TabsTrigger value="selectionsort">{t('algorithms.selectionSort')}</TabsTrigger>
+              <TabsTrigger value="heapsort">{t('algorithms.heapSort')}</TabsTrigger>
+              <TabsTrigger value="radixsort">{t('algorithms.radixSort')}</TabsTrigger>
+              <TabsTrigger value="countingsort">{t('algorithms.countingSort')}</TabsTrigger>
+              <TabsTrigger value="bucketsort">{t('algorithms.bucketSort')}</TabsTrigger>
+              <TabsTrigger value="shellsort">{t('algorithms.shellSort')}</TabsTrigger>
             </TabsList>
           </Tabs>
           <TooltipProvider>
@@ -289,7 +331,7 @@ function SortingPanel() {
                   <Button aria-label="GitHub" className="p-2" variant="ghost"><Github className="h-4 w-4"/></Button>
                 </a>
               </TooltipTrigger>
-              <TooltipContent>Open Source Portfolio</TooltipContent>
+              <TooltipContent>{t('footer.openSourcePortfolio')}</TooltipContent>
             </Tooltip>
           </TooltipProvider>
         </div>
@@ -311,14 +353,14 @@ function SortingPanel() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <div className="rounded-xl p-3 glass-light">
-            <div className="text-xs text-slate-300 mb-2">Complexity</div>
-            <div className="text-sm text-slate-200">Best: {BIGO[algo].best}</div>
-            <div className="text-sm text-slate-200">Average: {BIGO[algo].avg}</div>
-            <div className="text-sm text-slate-200">Worst: {BIGO[algo].worst}</div>
-            <div className="text-sm text-slate-200">Space: {BIGO[algo].space}</div>
+            <div className="text-xs text-slate-300 mb-2">{t('common.complexity')}</div>
+            <div className="text-sm text-slate-200">{t('common.best')}: {BIGO[algo].best}</div>
+            <div className="text-sm text-slate-200">{t('common.average')}: {BIGO[algo].avg}</div>
+            <div className="text-sm text-slate-200">{t('common.worst')}: {BIGO[algo].worst}</div>
+            <div className="text-sm text-slate-200">{t('common.space')}: {BIGO[algo].space}</div>
           </div>
           <div className="rounded-xl p-3 glass-light">
-            <div className="text-xs text-slate-300 mb-2">Writes per step</div>
+            <div className="text-xs text-slate-300 mb-2">{t('sorting.writesPerStep')}</div>
             <div className="h-24">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={perfData}>
@@ -331,7 +373,7 @@ function SortingPanel() {
             </div>
           </div>
           <div className="rounded-xl p-3 glass-light">
-            <div className="text-xs text-slate-300 mb-2">Current Event</div>
+            <div className="text-xs text-slate-300 mb-2">{t('sorting.currentEvent')}</div>
             <div className="text-sm text-slate-200 font-mono">
               {(highlight as any)?.type ? JSON.stringify((highlight as any).type) : "—"}
             </div>
@@ -348,10 +390,11 @@ function makeGrid(r:number, c:number, wallProb=0.2) {
 }
 
 function PathfindingPanel() {
+  const t = useTranslations();
   const [rows, setRows] = useState(14);
   const [cols, setCols] = useState(24);
   const [grid, setGrid] = useState<number[][]>(()=>makeGrid(14,24));
-  const [algo, setAlgo] = useState<"dijkstra"|"astar">("dijkstra");
+  const [algo, setAlgo] = useState<"dijkstra"|"astar"|"bfs"|"dfs">("dijkstra");
   const [speed, setSpeed] = useState(60);
   const [running, setRunning] = useState(false);
   const [start] = useState({x: 2, y: 6});
@@ -363,7 +406,17 @@ function PathfindingPanel() {
 
   useEffect(()=>{ setGrid(makeGrid(rows, cols)); setState({visit:new Set(),relax:new Set(),path:new Set()}); setGen(null); setRunning(false); }, [rows, cols]);
 
-  const buildGen = () => setGen(algo === "dijkstra" ? dijkstraSteps(grid, start, goal) : aStarSteps(grid, start, goal));
+  const buildGen = () => {
+    let g: Generator<any>;
+    switch(algo) {
+      case "dijkstra": g = dijkstraSteps(grid, start, goal); break;
+      case "astar": g = aStarSteps(grid, start, goal); break;
+      case "bfs": g = algoLib.bfsSteps(grid, start, goal); break;
+      case "dfs": g = algoLib.dfsSteps(grid, start, goal); break;
+      default: g = dijkstraSteps(grid, start, goal);
+    }
+    setGen(g);
+  };
   const key = (x:number,y:number)=>`${x},${y}`;
 
   const step = () => {
@@ -419,13 +472,15 @@ function PathfindingPanel() {
       <CardHeader className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-3">
           <Route className="h-5 w-5 text-fuchsia-400 drop-shadow-lg"/>
-          <CardTitle className="text-indigo-100">Pathfinding</CardTitle>
-          <Pill>{algo === 'dijkstra' ? 'Dijkstra' : 'A*'}</Pill>
+          <CardTitle className="text-indigo-100">{t('pathfinding.title')}</CardTitle>
+          <Pill>{t(`algorithms.${algo}`)}</Pill>
         </div>
         <Tabs value={algo} onValueChange={setAlgo}>
           <TabsList>
-            <TabsTrigger value="dijkstra">Dijkstra</TabsTrigger>
-            <TabsTrigger value="astar">A*</TabsTrigger>
+            <TabsTrigger value="dijkstra">{t('pathfinding.dijkstra')}</TabsTrigger>
+            <TabsTrigger value="astar">{t('pathfinding.astar')}</TabsTrigger>
+            <TabsTrigger value="bfs">{t('algorithms.bfs')}</TabsTrigger>
+            <TabsTrigger value="dfs">{t('algorithms.dfs')}</TabsTrigger>
           </TabsList>
         </Tabs>
       </CardHeader>
@@ -441,23 +496,23 @@ function PathfindingPanel() {
         />
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           <div className="rounded-xl p-3 glass-light space-y-2">
-            <div className="text-xs text-slate-300">Grid Size</div>
-            <div className="flex items-center gap-2"><Label className="text-xs">Rows</Label><div className="w-36"><Slider value={[rows]} min={8} max={24} step={1} onValueChange={(v)=>v && v[0] !== undefined && setRows(v[0])}/></div></div>
-            <div className="flex items-center gap-2"><Label className="text-xs">Cols</Label><div className="w-36"><Slider value={[cols]} min={12} max={36} step={1} onValueChange={(v)=>v && v[0] !== undefined && setCols(v[0])}/></div></div>
+            <div className="text-xs text-slate-300">{t('pathfinding.gridSize')}</div>
+            <div className="flex items-center gap-2"><Label className="text-xs">{t('pathfinding.rows')}</Label><div className="w-36"><Slider value={[rows]} min={8} max={24} step={1} onValueChange={(v)=>v && v[0] !== undefined && setRows(v[0])}/></div></div>
+            <div className="flex items-center gap-2"><Label className="text-xs">{t('pathfinding.cols')}</Label><div className="w-36"><Slider value={[cols]} min={12} max={36} step={1} onValueChange={(v)=>v && v[0] !== undefined && setCols(v[0])}/></div></div>
           </div>
           <div className="rounded-xl p-3 glass-light">
-            <div className="text-xs text-slate-300">Legend</div>
+            <div className="text-xs text-slate-300">{t('pathfinding.legend')}</div>
             <div className="flex flex-wrap gap-2 mt-2 text-xs">
-              <Pill>Start</Pill><Pill>Goal</Pill><Pill>Visited</Pill><Pill>Relaxed</Pill><Pill>Path</Pill>
+              <Pill>{t('pathfinding.start')}</Pill><Pill>{t('pathfinding.goal')}</Pill><Pill>{t('pathfinding.visited')}</Pill><Pill>{t('pathfinding.relaxed')}</Pill><Pill>{t('pathfinding.path')}</Pill>
             </div>
           </div>
           <div className="rounded-xl p-3 glass-light md:col-span-2">
-            <div className="text-xs text-slate-300 mb-2">Complexity</div>
+            <div className="text-xs text-slate-300 mb-2">{t('common.complexity')}</div>
             <div className="grid grid-cols-2 gap-2 text-sm text-slate-200">
-              <div>Best: {BIGO[algo].best}</div>
-              <div>Avg: {BIGO[algo].avg}</div>
-              <div>Worst: {BIGO[algo].worst}</div>
-              <div>Space: {BIGO[algo].space}</div>
+              <div>{t('common.best')}: {BIGO[algo].best}</div>
+              <div>{t('pathfinding.avg')}: {BIGO[algo].avg}</div>
+              <div>{t('common.worst')}: {BIGO[algo].worst}</div>
+              <div>{t('common.space')}: {BIGO[algo].space}</div>
             </div>
           </div>
         </div>
@@ -470,8 +525,10 @@ function PathfindingPanel() {
 }
 
 function KMPPanel() {
+  const t = useTranslations();
   const [text, setText] = useState("lorem ipsum dolor sit amet ipsum");
   const [pat, setPat] = useState("ipsum");
+  const [algo, setAlgo] = useState<"kmp"|"rabinkarp"|"boyermoore"|"zalgorithm"|"naivestring">("kmp");
   const [matches, setMatches] = useState<number[]>([]);
   const [running, setRunning] = useState(false);
   const [speed, setSpeed] = useState(120);
@@ -482,7 +539,18 @@ function KMPPanel() {
   const reset = () => { setMatches([]); setGen(null); setRunning(false); setLps([]); setPos({i:-1,j:-1}); };
 
   const step = () => {
-    if (!gen) setGen(kmpSteps(text, pat));
+    if (!gen) {
+      let g: Generator<any>;
+      switch(algo) {
+        case "kmp": g = kmpSteps(text, pat); break;
+        case "rabinkarp": g = algoLib.rabinKarpSteps(text, pat); break;
+        case "boyermoore": g = algoLib.boyerMooreSteps(text, pat); break;
+        case "zalgorithm": g = algoLib.zAlgorithmSteps(text, pat); break;
+        case "naivestring": g = algoLib.naiveStringSteps(text, pat); break;
+        default: g = kmpSteps(text, pat);
+      }
+      setGen(g);
+    }
     const { value, done } = (gen || { next: ()=>({done:true}) } as any).next();
     if (done) { setRunning(false); return; }
     if (value?.type === 'lps') setLps(value.lps);
@@ -497,14 +565,23 @@ function KMPPanel() {
       <CardHeader className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-3">
           <Binary className="h-5 w-5 text-emerald-400 drop-shadow-lg"/>
-          <CardTitle className="text-indigo-100">String Matching — KMP</CardTitle>
-          <Pill>KMP</Pill>
+          <CardTitle className="text-indigo-100">{t('kmp.title')}</CardTitle>
+          <Pill>{t(`algorithms.${algo}`)}</Pill>
         </div>
+        <Tabs value={algo} onValueChange={setAlgo}>
+          <TabsList>
+            <TabsTrigger value="kmp">{t('kmp.kmp')}</TabsTrigger>
+            <TabsTrigger value="rabinkarp">{t('algorithms.rabinKarp')}</TabsTrigger>
+            <TabsTrigger value="boyermoore">{t('algorithms.boyerMoore')}</TabsTrigger>
+            <TabsTrigger value="zalgorithm">{t('algorithms.zAlgorithm')}</TabsTrigger>
+            <TabsTrigger value="naivestring">{t('algorithms.naiveString')}</TabsTrigger>
+          </TabsList>
+        </Tabs>
       </CardHeader>
       <CardContent className="space-y-4">
         <ControlBar
           running={running}
-          onPlay={()=>{ if(!gen) setGen(kmpSteps(text, pat)); setRunning(true); }}
+          onPlay={()=>{ if(!gen) step(); setRunning(true); }}
           onPause={()=>setRunning(false)}
           onStep={step}
           onShuffle={()=>{ reset(); }}
@@ -513,10 +590,10 @@ function KMPPanel() {
         />
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <div className="rounded-xl p-3 glass-light md:col-span-2">
-            <div className="text-xs text-slate-300 mb-2">Input</div>
+            <div className="text-xs text-slate-300 mb-2">{t('kmp.input')}</div>
             <div className="flex flex-col gap-2">
-              <input className="px-3 py-2 rounded-lg glass-light border-white/10 text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-400/30 transition-all" value={text} onChange={(e)=>{ setText(e.target.value); reset(); }} placeholder="Enter text..." />
-              <input className="px-3 py-2 rounded-lg glass-light border-white/10 text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-400/30 transition-all" value={pat} onChange={(e)=>{ setPat(e.target.value); reset(); }} placeholder="Enter pattern..." />
+              <input className="px-3 py-2 rounded-lg glass-light border-white/10 text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-400/30 transition-all" value={text} onChange={(e)=>{ setText(e.target.value); reset(); }} placeholder={t('kmp.enterText')} />
+              <input className="px-3 py-2 rounded-lg glass-light border-white/10 text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-400/30 transition-all" value={pat} onChange={(e)=>{ setPat(e.target.value); reset(); }} placeholder={t('kmp.enterPattern')} />
             </div>
             <div className="mt-3 text-sm text-slate-200 font-mono break-words p-2 rounded-lg glass-light">
               {text.split("").map((ch, idx)=>{
@@ -535,7 +612,7 @@ function KMPPanel() {
             </div>
           </div>
           <div className="rounded-xl p-3 glass-light">
-            <div className="text-xs text-slate-300 mb-2">LPS Table</div>
+            <div className="text-xs text-slate-300 mb-2">{t('kmp.lpsTable')}</div>
             <div className="flex flex-wrap gap-1 text-sm font-mono">
               {pat.split("").map((c,i)=> (
                 <div key={i} className="px-2 py-1 rounded glass-light border-white/10 flex items-center gap-2">
@@ -544,7 +621,7 @@ function KMPPanel() {
                 </div>
               ))}
             </div>
-            <div className="mt-3 text-xs text-slate-300">Complexity: Best/Avg/Worst {BIGO.kmp.best} | Space {BIGO.kmp.space}</div>
+            <div className="mt-3 text-xs text-slate-300">{t('kmp.complexityNote', { best: BIGO[algo].best, space: BIGO[algo].space })}</div>
           </div>
         </div>
       </CardContent>
@@ -559,17 +636,26 @@ const formattedDate: string = currentDate.toLocaleDateString('en-US', {
   day: 'numeric',
 });
 export default function AlgoVista() {
+  const t = useTranslations();
+  const currentDate: Date = new Date();
+  const formattedDate: string = currentDate.toLocaleDateString('en-US', {
+    weekday: 'short',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
   return (
     <div className="min-h-screen w-full text-slate-100 relative z-10">
       <header className="sticky top-0 z-50 glass-strong border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Cpu className="h-5 w-5 text-fuchsia-400 drop-shadow-lg"/>
-            <h1 className="text-lg font-semibold tracking-tight bg-gradient-to-r from-indigo-200 to-fuchsia-200 bg-clip-text text-transparent">AlgoVista — Algorithm Visualizer</h1>
+            <h1 className="text-lg font-semibold tracking-tight bg-gradient-to-r from-indigo-200 to-fuchsia-200 bg-clip-text text-transparent">{t('header.title')}</h1>
             <Pill>{formattedDate}</Pill>
           </div>
           <div className="flex items-center gap-2">
-            <a href="https://voxhash.dev/" target="_blank" rel="noreferrer"><Button variant="ghost">Portfolio</Button></a>
+            <LanguageSwitcher />
+            <a href="https://voxhash.dev/" target="_blank" rel="noreferrer"><Button variant="ghost">{t('common.portfolio')}</Button></a>
             <Button variant="outline"><Code2 className="h-4 w-4"/></Button>
           </div>
         </div>
@@ -589,22 +675,23 @@ export default function AlgoVista() {
 }
 
 function IntroCard() {
+  const t = useTranslations();
   return (
     <Card>
       <CardHeader className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-3">
           <Activity className="h-5 w-5 text-indigo-400 drop-shadow-lg"/>
-          <CardTitle className="text-indigo-100">Interactive Algorithm Playground</CardTitle>
-          <Pill>Made by VoxHash</Pill>
+          <CardTitle className="text-indigo-100">{t('intro.title')}</CardTitle>
+          <Pill>{t('header.madeBy')}</Pill>
         </div>
       </CardHeader>
       <CardContent className="text-sm text-slate-200 leading-relaxed">
         <ul className="list-disc pl-6 space-y-1">
-          <li>Real-time animations with step-by-step generators (no blocking loops).</li>
-          <li>Instrumentation panel to visualize operation density and complexity at a glance.</li>
-          <li>Pathfinding sandbox with clickable walls and switchable algorithms (Dijkstra, A*).</li>
-          <li>KMP string matcher with live LPS table updates and match highlighting.</li>
-          <li>Composable architecture ready for SSR and testability; add your own algorithms easily.</li>
+          <li>{t('intro.feature1')}</li>
+          <li>{t('intro.feature2')}</li>
+          <li>{t('intro.feature3')}</li>
+          <li>{t('intro.feature4')}</li>
+          <li>{t('intro.feature5')}</li>
         </ul>
       </CardContent>
     </Card>
@@ -612,15 +699,16 @@ function IntroCard() {
 }
 
 function FooterCard() {
+  const t = useTranslations();
   return (
     <Card>
       <CardContent className="py-4 text-xs text-slate-300 flex flex-wrap items-center justify-between">
         <div>
-          © 2025 AlgoVista — Built with Next.js, Tailwind, Framer Motion, Recharts.
+          {t('footer.copyright')}
         </div>
         <div className="flex items-center gap-2">
-          <a className="underline-offset-4 hover:underline hover:text-indigo-300 transition-colors" href="https://github.com/VoxHash" target="_blank" rel="noreferrer">GitHub</a>
-          <a className="underline-offset-4 hover:underline hover:text-indigo-300 transition-colors" href="https://youtube.com/@VoxHash" target="_blank" rel="noreferrer">YouTube</a>
+          <a className="underline-offset-4 hover:underline hover:text-indigo-300 transition-colors" href="https://github.com/VoxHash" target="_blank" rel="noreferrer">{t('common.github')}</a>
+          <a className="underline-offset-4 hover:underline hover:text-indigo-300 transition-colors" href="https://youtube.com/@VoxHash" target="_blank" rel="noreferrer">{t('common.youtube')}</a>
         </div>
       </CardContent>
     </Card>

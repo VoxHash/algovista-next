@@ -1,0 +1,91 @@
+{
+  "common": {
+    "play": "Lire",
+    "pause": "Pause",
+    "step": "Étape",
+    "shuffle": "Mélanger",
+    "speed": "Vitesse",
+    "size": "Taille",
+    "complexity": "Complexité",
+    "best": "Meilleur",
+    "average": "Moyenne",
+    "worst": "Pire",
+    "space": "Espace",
+    "portfolio": "Portfolio",
+    "github": "GitHub",
+    "youtube": "YouTube"
+  },
+  "header": {
+    "title": "AlgoVista — Visualiseur d'Algorithmes",
+    "madeBy": "Fait par VoxHash"
+  },
+  "intro": {
+    "title": "Terrain de Jeu Interactif d'Algorithmes",
+    "feature1": "Animations en temps réel avec générateurs étape par étape (sans boucles bloquantes).",
+    "feature2": "Panneau d'instrumentation pour visualiser la densité des opérations et la complexité en un coup d'œil.",
+    "feature3": "Bac à sable de recherche de chemin avec murs cliquables et algorithmes interchangeables (Dijkstra, A*).",
+    "feature4": "Correspondance de chaînes KMP avec mises à jour de table LPS en direct et surlignage des correspondances.",
+    "feature5": "Architecture composable prête pour SSR et testabilité; ajoutez facilement vos propres algorithmes."
+  },
+  "sorting": {
+    "title": "Tri",
+    "quickSort": "Tri Rapide",
+    "mergeSort": "Tri par Fusion",
+    "quick": "Rapide",
+    "merge": "Fusion",
+    "writesPerStep": "Écritures par étape",
+    "currentEvent": "Événement Actuel"
+  },
+  "pathfinding": {
+    "title": "Recherche de Chemin",
+    "dijkstra": "Dijkstra",
+    "astar": "A*",
+    "gridSize": "Taille de la Grille",
+    "rows": "Lignes",
+    "cols": "Colonnes",
+    "legend": "Légende",
+    "start": "Départ",
+    "goal": "Objectif",
+    "visited": "Visité",
+    "relaxed": "Relâché",
+    "path": "Chemin",
+    "avg": "Moy."
+  },
+  "kmp": {
+    "title": "Correspondance de Chaînes — KMP",
+    "kmp": "KMP",
+    "input": "Entrée",
+    "lpsTable": "Tableau LPS",
+    "enterText": "Entrez le texte...",
+    "enterPattern": "Entrez le motif...",
+    "complexityNote": "Complexité: Meilleur/Moy./Pire {best} | Espace {space}",
+    "bestAvgWorst": "Meilleur/Moy./Pire"
+  },
+  "footer": {
+    "copyright": "© 2025 AlgoVista — Construit avec Next.js, Tailwind, Framer Motion, Recharts.",
+    "openSourcePortfolio": "Portfolio Open Source"
+  },
+  "algorithms": {
+    "bubbleSort": "Tri à Bulles",
+    "insertionSort": "Tri par Insertion",
+    "selectionSort": "Tri par Sélection",
+    "heapSort": "Tri par Tas",
+    "radixSort": "Tri Radix",
+    "countingSort": "Tri par Comptage",
+    "bucketSort": "Tri par Seau",
+    "shellSort": "Tri de Shell",
+    "timSort": "Tim Sort",
+    "bogoSort": "Bogo Sort",
+    "bfs": "BFS",
+    "dfs": "DFS",
+    "bellmanFord": "Bellman-Ford",
+    "floydWarshall": "Floyd-Warshall",
+    "binarySearch": "Recherche Binaire",
+    "linearSearch": "Recherche Linéaire",
+    "rabinKarp": "Rabin-Karp",
+    "boyerMoore": "Boyer-Moore",
+    "zAlgorithm": "Algorithme Z",
+    "naiveString": "Correspondance de Chaînes Naïve"
+  }
+}
+
