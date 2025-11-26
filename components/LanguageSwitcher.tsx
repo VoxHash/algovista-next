@@ -31,7 +31,7 @@ export default function LanguageSwitcher() {
       const saved = localStorage.getItem('locale');
       if (saved && saved !== locale) {
         const newPath = pathname.replace(`/${locale}`, `/${saved}`);
-        router.push(newPath);
+        router.push(newPath as any);
       }
     }
   }, []);
@@ -41,7 +41,7 @@ export default function LanguageSwitcher() {
       localStorage.setItem('locale', newLocale);
     }
     const newPath = pathname.replace(`/${locale}`, `/${newLocale}`);
-    router.push(newPath);
+    router.push(newPath as any);
     setIsOpen(false);
   };
 
