@@ -1,5 +1,5 @@
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
+import { getMessages, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { locales } from '@/i18n';
 import type { Metadata } from "next";
@@ -27,11 +27,13 @@ export default async function LocaleLayout({
     notFound();
   }
 
+  // Set the locale in the request context for next-intl
+  setRequestLocale(locale);
+
   // Use try-catch for getMessages in case of build-time issues
-  // Explicitly pass locale to getMessages to ensure it works with localePrefix never
   let messages;
   try {
-    messages = await getMessages({ locale });
+    messages = await getMessages();
   } catch (error) {
     // If getMessages fails during build, use empty messages
     messages = {};
