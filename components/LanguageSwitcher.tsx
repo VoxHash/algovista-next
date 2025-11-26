@@ -32,11 +32,11 @@ export default function LanguageSwitcher() {
     if (newLocale === 'en') {
       // Remove locale prefix for default locale
       const newPath = pathname.replace(/^\/[a-z]{2}(\/|$)/, '/');
-      router.push(newPath || '/');
+      router.push((newPath || '/') as any);
     } else {
       // Add or replace locale prefix for other locales
       const newPath = pathname.replace(/^\/[a-z]{2}(\/|$)/, `/${newLocale}$1`) || `/${newLocale}`;
-      router.push(newPath);
+      router.push(newPath as any);
     }
     setIsOpen(false);
   };
