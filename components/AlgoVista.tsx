@@ -381,7 +381,7 @@ function SortingPanel() {
           <Pill className="hidden sm:inline-flex flex-shrink-0">{getAlgorithmName(algo)}</Pill>
         </div>
         <div className="flex items-center gap-2 flex-wrap w-full sm:w-auto">
-          <Tabs value={algo} onValueChange={(v) => { if (!running) setAlgo(v as any); }} >
+          <Tabs value={algo} onValueChange={(v: string) => { if (!running) setAlgo(v as any); }} >
             <TabsList className="max-w-full overflow-x-auto scrollbar-hide">
               <TabsTrigger value="quicksort" disabled={running} className="text-xs sm:text-sm">Quick</TabsTrigger>
               <TabsTrigger value="mergesort" disabled={running} className="text-xs sm:text-sm">Merge</TabsTrigger>
@@ -551,7 +551,7 @@ function PathfindingPanel() {
           <CardTitle className="text-indigo-100 text-base sm:text-lg">Pathfinding</CardTitle>
           <Pill className="hidden sm:inline-flex flex-shrink-0">{getAlgorithmName(algo)}</Pill>
         </div>
-        <Tabs value={algo} onValueChange={(v) => { if (!running) setAlgo(v as any); }} className="w-full sm:w-auto">
+        <Tabs value={algo} onValueChange={(v: string) => { if (!running) setAlgo(v as any); }} className="w-full sm:w-auto">
           <TabsList className="max-w-full overflow-x-auto scrollbar-hide">
             <TabsTrigger value="dijkstra" disabled={running} className="text-xs sm:text-sm">Dijkstra</TabsTrigger>
             <TabsTrigger value="astar" disabled={running} className="text-xs sm:text-sm">A*</TabsTrigger>
@@ -654,7 +654,7 @@ function KMPPanel() {
           <CardTitle className="text-indigo-100 text-base sm:text-lg">String Matching — KMP</CardTitle>
           <Pill className="hidden sm:inline-flex flex-shrink-0">{getAlgorithmName(algo)}</Pill>
         </div>
-        <Tabs value={algo} onValueChange={(v) => { if (!running) setAlgo(v as any); }} className="w-full sm:w-auto">
+        <Tabs value={algo} onValueChange={(v: string) => { if (!running) setAlgo(v as any); }} className="w-full sm:w-auto">
           <TabsList className="max-w-full overflow-x-auto scrollbar-hide">
             <TabsTrigger value="kmp" disabled={running} className="text-xs sm:text-sm">KMP</TabsTrigger>
             <TabsTrigger value="rabinkarp" disabled={running} className="text-xs sm:text-sm">Rabin-Karp</TabsTrigger>
