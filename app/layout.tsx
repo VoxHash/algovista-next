@@ -1,9 +1,9 @@
-import { ReactNode } from 'react';
+import '../app/globals.css';
 
 export default function RootLayout({
   children,
 }: {
-  children: ReactNode;
+  children: React.ReactNode;
 }) {
   return children;
 }
