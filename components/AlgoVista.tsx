@@ -260,23 +260,51 @@ function ControlBar({ running, onPlay, onPause, onStep, onShuffle, speed, setSpe
   { running:boolean, onPlay:()=>void, onPause:()=>void, onStep:()=>void, onShuffle:()=>void,
     speed:number, setSpeed:(n:number)=>void, size?:number, setSize?:(n:number)=>void }) {
   return (
-    <div className="flex flex-wrap items-center gap-3 p-3 rounded-xl glass-light">
-      <div className="flex items-center gap-2">
-        <Button onClick={running ? onPause : onPlay} variant={running ? "secondary" : "default"}>
+    <div className="flex flex-wrap items-center gap-3 p-3 sm:p-4 rounded-xl glass-light">
+      <div className="flex items-center gap-2 flex-wrap">
+        <Button 
+          onClick={running ? onPause : onPlay} 
+          variant={running ? "secondary" : "default"}
+          size="sm"
+          className="flex-1 sm:flex-none min-w-[100px]"
+          aria-label={running ? "Pause algorithm" : "Play algorithm"}
+        >
           {running ? <Pause className="mr-2 h-4 w-4"/> : <Play className="mr-2 h-4 w-4"/>}
-          {running ? 'Pause' : 'Play'}
+          <span className="hidden sm:inline">{running ? 'Pause' : 'Play'}</span>
         </Button>
-        <Button onClick={onStep} variant="outline"><StepForward className="mr-2 h-4 w-4"/>Step</Button>
-        <Button onClick={onShuffle} variant="ghost"><Shuffle className="mr-2 h-4 w-4"/>Shuffle</Button>
+        <Button 
+          onClick={onStep} 
+          variant="outline" 
+          size="sm"
+          disabled={running}
+          className="flex-1 sm:flex-none min-w-[80px]"
+          aria-label="Step forward"
+        >
+          <StepForward className="mr-2 h-4 w-4"/>
+          <span className="hidden sm:inline">Step</span>
+        </Button>
+        <Button 
+          onClick={onShuffle} 
+          variant="ghost" 
+          size="sm"
+          disabled={running}
+          className="flex-1 sm:flex-none min-w-[90px]"
+          aria-label="Shuffle data"
+        >
+          <Shuffle className="mr-2 h-4 w-4"/>
+          <span className="hidden sm:inline">Shuffle</span>
+        </Button>
       </div>
-      <div className="flex items-center gap-2">
-        <span className="text-xs text-slate-300">Speed</span>
-        <div className="w-36"><Slider value={[speed]} min={10} max={800} step={10} onValueChange={(v)=>v && v[0] !== undefined && setSpeed(v[0])}/></div>
+      <div className="flex items-center gap-2 flex-1 min-w-[150px]">
+        <span className="text-xs text-slate-300 whitespace-nowrap">Speed</span>
+        <div className="flex-1 max-w-[200px]"><Slider value={[speed]} min={10} max={800} step={10} onValueChange={(v)=>v && v[0] !== undefined && setSpeed(v[0])}/></div>
+        <span className="text-xs text-slate-400 w-12 text-right">{speed}ms</span>
       </div>
       {typeof size === 'number' && setSize && (
-        <div className="flex items-center gap-2">
-          <span className="text-xs text-slate-300">Size</span>
-          <div className="w-36"><Slider value={[size]} min={5} max={80} step={1} onValueChange={(v)=>v && v[0] !== undefined && setSize(v[0])}/></div>
+        <div className="flex items-center gap-2 flex-1 min-w-[150px]">
+          <span className="text-xs text-slate-300 whitespace-nowrap">Size</span>
+          <div className="flex-1 max-w-[200px]"><Slider value={[size]} min={5} max={80} step={1} onValueChange={(v)=>v && v[0] !== undefined && setSize(v[0])}/></div>
+          <span className="text-xs text-slate-400 w-12 text-right">{size}</span>
         </div>
       )}
     </div>
@@ -346,25 +374,25 @@ function SortingPanel() {
 
   return (
     <Card>
-      <CardHeader className="flex items-center justify-between gap-2">
-        <div className="flex items-center gap-3">
-          <ListOrdered className="h-5 w-5 text-indigo-400 drop-shadow-lg"/>
-          <CardTitle className="text-indigo-100">Sorting</CardTitle>
-          <Pill>{getAlgorithmName(algo)}</Pill>
+      <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-2">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <ListOrdered className="h-5 w-5 text-indigo-400 drop-shadow-lg flex-shrink-0"/>
+          <CardTitle className="text-indigo-100 text-base sm:text-lg">Sorting</CardTitle>
+          <Pill className="hidden sm:inline-flex flex-shrink-0">{getAlgorithmName(algo)}</Pill>
         </div>
-        <div className="flex items-center gap-2">
-          <Tabs value={algo} onValueChange={setAlgo} >
-            <TabsList className="max-w-full overflow-x-auto">
-              <TabsTrigger value="quicksort">Quick</TabsTrigger>
-              <TabsTrigger value="mergesort">Merge</TabsTrigger>
-              <TabsTrigger value="bubblesort">Bubble Sort</TabsTrigger>
-              <TabsTrigger value="insertionsort">Insertion Sort</TabsTrigger>
-              <TabsTrigger value="selectionsort">Selection Sort</TabsTrigger>
-              <TabsTrigger value="heapsort">Heap Sort</TabsTrigger>
-              <TabsTrigger value="radixsort">Radix Sort</TabsTrigger>
-              <TabsTrigger value="countingsort">Counting Sort</TabsTrigger>
-              <TabsTrigger value="bucketsort">Bucket Sort</TabsTrigger>
-              <TabsTrigger value="shellsort">Shell Sort</TabsTrigger>
+        <div className="flex items-center gap-2 flex-wrap w-full sm:w-auto">
+          <Tabs value={algo} onValueChange={(v) => { if (!running) setAlgo(v as any); }} >
+            <TabsList className="max-w-full overflow-x-auto scrollbar-hide">
+              <TabsTrigger value="quicksort" disabled={running} className="text-xs sm:text-sm">Quick</TabsTrigger>
+              <TabsTrigger value="mergesort" disabled={running} className="text-xs sm:text-sm">Merge</TabsTrigger>
+              <TabsTrigger value="bubblesort" disabled={running} className="text-xs sm:text-sm">Bubble</TabsTrigger>
+              <TabsTrigger value="insertionsort" disabled={running} className="text-xs sm:text-sm hidden sm:inline-flex">Insertion</TabsTrigger>
+              <TabsTrigger value="selectionsort" disabled={running} className="text-xs sm:text-sm hidden sm:inline-flex">Selection</TabsTrigger>
+              <TabsTrigger value="heapsort" disabled={running} className="text-xs sm:text-sm hidden md:inline-flex">Heap</TabsTrigger>
+              <TabsTrigger value="radixsort" disabled={running} className="text-xs sm:text-sm hidden md:inline-flex">Radix</TabsTrigger>
+              <TabsTrigger value="countingsort" disabled={running} className="text-xs sm:text-sm hidden lg:inline-flex">Counting</TabsTrigger>
+              <TabsTrigger value="bucketsort" disabled={running} className="text-xs sm:text-sm hidden lg:inline-flex">Bucket</TabsTrigger>
+              <TabsTrigger value="shellsort" disabled={running} className="text-xs sm:text-sm hidden lg:inline-flex">Shell</TabsTrigger>
             </TabsList>
           </Tabs>
           <TooltipProvider>
@@ -517,24 +545,24 @@ function PathfindingPanel() {
 
   return (
     <Card>
-      <CardHeader className="flex items-center justify-between gap-2">
-        <div className="flex items-center gap-3">
-          <Route className="h-5 w-5 text-fuchsia-400 drop-shadow-lg"/>
-          <CardTitle className="text-indigo-100">Pathfinding</CardTitle>
-          <Pill>{getAlgorithmName(algo)}</Pill>
+      <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-2">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <Route className="h-5 w-5 text-fuchsia-400 drop-shadow-lg flex-shrink-0"/>
+          <CardTitle className="text-indigo-100 text-base sm:text-lg">Pathfinding</CardTitle>
+          <Pill className="hidden sm:inline-flex flex-shrink-0">{getAlgorithmName(algo)}</Pill>
         </div>
-        <Tabs value={algo} onValueChange={setAlgo}>
-          <TabsList className="max-w-full overflow-x-auto">
-            <TabsTrigger value="dijkstra">Dijkstra</TabsTrigger>
-            <TabsTrigger value="astar">A*</TabsTrigger>
-            <TabsTrigger value="bfs">BFS</TabsTrigger>
-            <TabsTrigger value="dfs">DFS</TabsTrigger>
-            <TabsTrigger value="bellmanford">Bellman-Ford</TabsTrigger>
-            <TabsTrigger value="floydwarshall">Floyd-Warshall</TabsTrigger>
-            <TabsTrigger value="greedybestfirst">Greedy Best-First</TabsTrigger>
-            <TabsTrigger value="bidirectional">Bidirectional Search</TabsTrigger>
-            <TabsTrigger value="jumppointsearch">Jump Point Search</TabsTrigger>
-            <TabsTrigger value="thetastar">Theta*</TabsTrigger>
+        <Tabs value={algo} onValueChange={(v) => { if (!running) setAlgo(v as any); }} className="w-full sm:w-auto">
+          <TabsList className="max-w-full overflow-x-auto scrollbar-hide">
+            <TabsTrigger value="dijkstra" disabled={running} className="text-xs sm:text-sm">Dijkstra</TabsTrigger>
+            <TabsTrigger value="astar" disabled={running} className="text-xs sm:text-sm">A*</TabsTrigger>
+            <TabsTrigger value="bfs" disabled={running} className="text-xs sm:text-sm">BFS</TabsTrigger>
+            <TabsTrigger value="dfs" disabled={running} className="text-xs sm:text-sm">DFS</TabsTrigger>
+            <TabsTrigger value="bellmanford" disabled={running} className="text-xs sm:text-sm hidden sm:inline-flex">Bellman-Ford</TabsTrigger>
+            <TabsTrigger value="floydwarshall" disabled={running} className="text-xs sm:text-sm hidden md:inline-flex">Floyd-Warshall</TabsTrigger>
+            <TabsTrigger value="greedybestfirst" disabled={running} className="text-xs sm:text-sm hidden md:inline-flex">Greedy</TabsTrigger>
+            <TabsTrigger value="bidirectional" disabled={running} className="text-xs sm:text-sm hidden lg:inline-flex">Bidirectional</TabsTrigger>
+            <TabsTrigger value="jumppointsearch" disabled={running} className="text-xs sm:text-sm hidden lg:inline-flex">JPS</TabsTrigger>
+            <TabsTrigger value="thetastar" disabled={running} className="text-xs sm:text-sm hidden lg:inline-flex">Theta*</TabsTrigger>
           </TabsList>
         </Tabs>
       </CardHeader>
@@ -620,24 +648,24 @@ function KMPPanel() {
 
   return (
     <Card>
-      <CardHeader className="flex items-center justify-between gap-2">
-        <div className="flex items-center gap-3">
-          <Binary className="h-5 w-5 text-emerald-400 drop-shadow-lg"/>
-          <CardTitle className="text-indigo-100">String Matching — KMP</CardTitle>
-          <Pill>{getAlgorithmName(algo)}</Pill>
+      <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-2">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <Binary className="h-5 w-5 text-emerald-400 drop-shadow-lg flex-shrink-0"/>
+          <CardTitle className="text-indigo-100 text-base sm:text-lg">String Matching — KMP</CardTitle>
+          <Pill className="hidden sm:inline-flex flex-shrink-0">{getAlgorithmName(algo)}</Pill>
         </div>
-        <Tabs value={algo} onValueChange={setAlgo}>
-          <TabsList className="max-w-full overflow-x-auto">
-            <TabsTrigger value="kmp">KMP</TabsTrigger>
-            <TabsTrigger value="rabinkarp">Rabin-Karp</TabsTrigger>
-            <TabsTrigger value="boyermoore">Boyer-Moore</TabsTrigger>
-            <TabsTrigger value="zalgorithm">Z Algorithm</TabsTrigger>
-            <TabsTrigger value="naivestring">Naive String Matching</TabsTrigger>
-            <TabsTrigger value="ahocorasick">Aho-Corasick</TabsTrigger>
-            <TabsTrigger value="finiteautomaton">Finite Automaton</TabsTrigger>
-            <TabsTrigger value="manacher">Manacher's Algorithm</TabsTrigger>
-            <TabsTrigger value="horspool">Horspool</TabsTrigger>
-            <TabsTrigger value="suffixarray">Suffix Array</TabsTrigger>
+        <Tabs value={algo} onValueChange={(v) => { if (!running) setAlgo(v as any); }} className="w-full sm:w-auto">
+          <TabsList className="max-w-full overflow-x-auto scrollbar-hide">
+            <TabsTrigger value="kmp" disabled={running} className="text-xs sm:text-sm">KMP</TabsTrigger>
+            <TabsTrigger value="rabinkarp" disabled={running} className="text-xs sm:text-sm">Rabin-Karp</TabsTrigger>
+            <TabsTrigger value="boyermoore" disabled={running} className="text-xs sm:text-sm">Boyer-Moore</TabsTrigger>
+            <TabsTrigger value="zalgorithm" disabled={running} className="text-xs sm:text-sm hidden sm:inline-flex">Z Algorithm</TabsTrigger>
+            <TabsTrigger value="naivestring" disabled={running} className="text-xs sm:text-sm hidden sm:inline-flex">Naive</TabsTrigger>
+            <TabsTrigger value="ahocorasick" disabled={running} className="text-xs sm:text-sm hidden md:inline-flex">Aho-Corasick</TabsTrigger>
+            <TabsTrigger value="finiteautomaton" disabled={running} className="text-xs sm:text-sm hidden md:inline-flex">Finite</TabsTrigger>
+            <TabsTrigger value="manacher" disabled={running} className="text-xs sm:text-sm hidden lg:inline-flex">Manacher</TabsTrigger>
+            <TabsTrigger value="horspool" disabled={running} className="text-xs sm:text-sm hidden lg:inline-flex">Horspool</TabsTrigger>
+            <TabsTrigger value="suffixarray" disabled={running} className="text-xs sm:text-sm hidden lg:inline-flex">Suffix</TabsTrigger>
           </TabsList>
         </Tabs>
       </CardHeader>
@@ -703,22 +731,35 @@ export default function AlgoVista() {
   return (
     <div className="min-h-screen w-full text-slate-100 relative z-10">
       <header className="sticky top-0 z-50 glass-strong border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Cpu className="h-5 w-5 text-fuchsia-400 drop-shadow-lg"/>
-            <h1 className="text-lg font-semibold tracking-tight bg-gradient-to-r from-indigo-200 to-fuchsia-200 bg-clip-text text-transparent">AlgoVista — Algorithm Visualizer</h1>
-            <Pill>{formattedDate}</Pill>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+            <Cpu className="h-5 w-5 text-fuchsia-400 drop-shadow-lg flex-shrink-0"/>
+            <h1 className="text-base sm:text-lg font-semibold tracking-tight bg-gradient-to-r from-indigo-200 to-fuchsia-200 bg-clip-text text-transparent truncate">AlgoVista — Algorithm Visualizer</h1>
+            <Pill className="hidden sm:inline-flex flex-shrink-0">{formattedDate}</Pill>
           </div>
-          <div className="flex items-center gap-2">
-            <a href="https://voxhash.dev/" target="_blank" rel="noreferrer"><Button variant="ghost">Portfolio</Button></a>
-            <Button variant="outline"><Code2 className="h-4 w-4"/></Button>
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <a href="https://voxhash.dev/" target="_blank" rel="noreferrer">
+              <Button variant="ghost" size="sm" className="hidden sm:inline-flex">Portfolio</Button>
+            </a>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <a href="https://github.com/VoxHash/algovista-next" target="_blank" rel="noreferrer">
+                    <Button variant="outline" size="icon" aria-label="View Source Code">
+                      <Code2 className="h-4 w-4"/>
+                    </Button>
+                  </a>
+                </TooltipTrigger>
+                <TooltipContent>View Source Code</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 py-6 space-y-6 relative z-10">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6 space-y-4 sm:space-y-6 relative z-10">
         <IntroCard />
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           <SortingPanel />
           <PathfindingPanel />
         </div>

@@ -14,10 +14,9 @@ An interactive, algorithm visualizer built with modern web technologies. Feature
   - **Sorting (10)**: Quick Sort, Merge Sort, Bubble Sort, Insertion Sort, Selection Sort, Heap Sort, Radix Sort, Counting Sort, Bucket Sort, Shell Sort
   - **Pathfinding (10)**: Dijkstra's, A*, BFS, DFS, Bellman-Ford, Floyd-Warshall, Greedy Best-First, Bidirectional Search, Jump Point Search, Theta*
   - **String Matching (10)**: KMP, Rabin-Karp, Boyer-Moore, Z Algorithm, Naive String Matching, Aho-Corasick, Finite Automaton, Manacher's Algorithm, Horspool, Suffix Array
-- **Multi-language Support**: Full i18n with 11 languages (English, Russian, Portuguese, Spanish, Estonian, French, German, Japanese, Chinese, Korean, Indonesian)
 - **Real-time Performance**: Step-by-step execution with speed controls
-- **Interactive UI**: Glassmorphism design, clickable grids, customizable parameters, and responsive design
-- **Modern Stack**: Built with Next.js 14, TypeScript, Tailwind CSS, Framer Motion, and next-intl
+- **Interactive UI**: Glassmorphism design, clickable grids, customizable parameters, and fully responsive design
+- **Modern Stack**: Built with Next.js 14, TypeScript, Tailwind CSS, and Framer Motion
 
 ## 🛠️ Tech Stack
 
@@ -66,61 +65,28 @@ npm test
 - Merge Sort algorithm correctness  
 - KMP string matching LPS table generation
 
-## 🌍 Internationalization
-
-AlgoVista supports 11 languages with full i18n:
-- 🇺🇸 English
-- 🇷🇺 Russian (Русский)
-- 🇵🇹 Portuguese (Português)
-- 🇪🇸 Spanish (Español)
-- 🇪🇪 Estonian (Eesti)
-- 🇫🇷 French (Français)
-- 🇩🇪 German (Deutsch)
-- 🇯🇵 Japanese (日本語)
-- 🇨🇳 Chinese (中文)
-- 🇰🇷 Korean (한국어)
-- 🇮🇩 Indonesian (Bahasa Indonesia)
-
-Users can switch languages using the language selector in the header. The UI automatically adapts to the selected language.
-
 ## 🏗️ Project Structure
 
 ```
 algovista-next/
 ├── app/                    # Next.js App Router
-│   ├── [locale]/          # Locale-based routing
-│   │   ├── layout.tsx     # Locale-aware layout
-│   │   └── page.tsx       # Main page
 │   ├── globals.css        # Global styles with glassmorphism
-│   ├── layout.tsx         # Root layout (redirects to /en)
-│   └── page.tsx           # Root page (redirects)
+│   ├── layout.tsx         # Root layout
+│   ├── page.tsx           # Main page
+│   └── not-found.tsx      # 404 page
 ├── components/            # React components
 │   ├── AlgoVista.tsx     # Main visualizer component
-│   ├── LanguageSwitcher.tsx # i18n language switcher
 │   └── ui/               # Reusable UI primitives
 │       ├── button.tsx
 │       ├── card.tsx
 │       ├── slider.tsx
 │       ├── tabs.tsx
-│       └── tooltip.tsx
+│       ├── tooltip.tsx
+│       └── label.tsx
 ├── lib/                   # Algorithm implementations
 │   └── algorithms.ts     # All algorithm generators
-├── messages/              # i18n translation files
-│   ├── en.json           # English
-│   ├── ru.json           # Russian
-│   ├── pt.json           # Portuguese
-│   ├── es.json           # Spanish
-│   ├── et.json           # Estonian
-│   ├── fr.json           # French
-│   ├── de.json           # German
-│   ├── ja.json           # Japanese
-│   ├── zh.json           # Chinese
-│   ├── ko.json           # Korean
-│   └── id.json           # Indonesian
 ├── __tests__/            # Test files
 │   └── algorithms.test.ts
-├── i18n.ts               # i18n configuration
-├── middleware.ts          # Next.js middleware for i18n
 ├── jest.config.cjs       # Jest configuration
 ├── tailwind.config.ts    # Tailwind CSS configuration
 └── tsconfig.json         # TypeScript configuration
