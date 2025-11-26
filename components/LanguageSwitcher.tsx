@@ -1,7 +1,7 @@
 'use client';
 
 import { useLocale } from 'next-intl';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Globe } from 'lucide-react';
@@ -23,12 +23,21 @@ const languages = [
 export default function LanguageSwitcher() {
   const locale = useLocale();
   const router = useRouter();
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
-  const switchLanguage = async (newLocale: string) => {
-    // Set locale cookie and reload to apply new language
-    document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
-    router.refresh();
+  const switchLanguage = (newLocale: string) => {
+    // With localePrefix 'as-needed', default locale (en) has no prefix
+    // Other locales have prefixes: /es, /ru, etc.
+    if (newLocale === 'en') {
+      // Remove locale prefix for default locale
+      const newPath = pathname.replace(/^\/[a-z]{2}(\/|$)/, '/');
+      router.push(newPath || '/');
+    } else {
+      // Add or replace locale prefix for other locales
+      const newPath = pathname.replace(/^\/[a-z]{2}(\/|$)/, `/${newLocale}$1`) || `/${newLocale}`;
+      router.push(newPath);
+    }
     setIsOpen(false);
   };
 
