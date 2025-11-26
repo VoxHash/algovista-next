@@ -1,7 +1,6 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { locales } from '@/i18n';
-import HtmlLangSetter from '@/components/HtmlLangSetter';
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -11,7 +10,6 @@ export const metadata: Metadata = {
 
 // Disable static generation - routes generated on-demand by middleware
 export const dynamic = 'force-dynamic';
-export const revalidate = 0;
 
 export default async function LocaleLayout({
   children,
@@ -39,14 +37,9 @@ export default async function LocaleLayout({
   }
 
   return (
-    <html lang={locale}>
-      <body>
-        <HtmlLangSetter />
-        <NextIntlClientProvider messages={messages} locale={locale}>
-          {children}
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider messages={messages} locale={locale}>
+      {children}
+    </NextIntlClientProvider>
   );
 }
 
