@@ -1,5 +1,3 @@
-'use client';
-
 import AlgoVista from "@/components/AlgoVista";
 
 // Disable static generation for this page to avoid prerender errors
