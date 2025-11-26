@@ -1,8 +1,5 @@
-import { redirect } from 'next/navigation';
+import AlgoVista from "@/components/AlgoVista";
 
-// Root page redirects to default locale
-// With localePrefix 'as-needed', /en will show as / in URL
-export default function RootPage() {
-  redirect('/en');
+export default function Page() {
+  return <AlgoVista />;
 }
-
