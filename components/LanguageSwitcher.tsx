@@ -1,7 +1,7 @@
 'use client';
 
 import { useLocale } from 'next-intl';
-import { useRouter } from 'next-intl/client';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Globe } from 'lucide-react';
@@ -25,9 +25,10 @@ export default function LanguageSwitcher() {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
-  const switchLanguage = (newLocale: string) => {
-    // Client-side language switching without URL change
-    router.replace({ locale: newLocale });
+  const switchLanguage = async (newLocale: string) => {
+    // Set locale cookie and reload to apply new language
+    document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
+    router.refresh();
     setIsOpen(false);
   };
 
