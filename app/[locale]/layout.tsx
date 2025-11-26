@@ -1,6 +1,7 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { locales } from '@/i18n';
+import HtmlLangSetter from '@/components/HtmlLangSetter';
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -38,6 +39,7 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider messages={messages} locale={locale}>
+      <HtmlLangSetter />
       {children}
     </NextIntlClientProvider>
   );
