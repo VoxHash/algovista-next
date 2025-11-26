@@ -250,8 +250,8 @@ function* aStarSteps(grid: number[][], start:{x:number,y:number}, goal:{x:number
   yield { type: "done", path: path.reverse() };
 }
 
-const Pill: React.FC<React.PropsWithChildren> = ({ children }) => (
-  <span className="px-2 py-1 rounded-full bg-gradient-to-r from-indigo-500/20 to-fuchsia-500/20 backdrop-blur-sm text-indigo-200 text-xs border border-white/20 shadow-sm">
+const Pill: React.FC<React.PropsWithChildren<{ className?: string }>> = ({ children, className }) => (
+  <span className={`px-2 py-1 rounded-full bg-gradient-to-r from-indigo-500/20 to-fuchsia-500/20 backdrop-blur-sm text-indigo-200 text-xs border border-white/20 shadow-sm ${className || ''}`}>
     {children}
   </span>
 );
