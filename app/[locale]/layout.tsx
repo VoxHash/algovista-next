@@ -28,16 +28,17 @@ export default async function LocaleLayout({
   }
 
   // Use try-catch for getMessages in case of build-time issues
+  // Explicitly pass locale to getMessages to ensure it works with localePrefix never
   let messages;
   try {
-    messages = await getMessages();
+    messages = await getMessages({ locale });
   } catch (error) {
     // If getMessages fails during build, use empty messages
     messages = {};
   }
 
   return (
-    <NextIntlClientProvider messages={messages}>
+    <NextIntlClientProvider messages={messages} locale={locale}>
       {children}
     </NextIntlClientProvider>
   );
