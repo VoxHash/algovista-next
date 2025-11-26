@@ -30,11 +30,18 @@ export default async function LocaleLayout({
   // With localePrefix never, we can't rely on getMessages() context
   let messages;
   try {
-    messages = (await import(`@/messages/${locale}.json`)).default;
+    const messagesModule = await import(`@/messages/${locale}.json`);
+    messages = messagesModule.default || messagesModule;
   } catch (error) {
-    // If import fails, use empty messages
-    console.error(`Failed to load messages for locale ${locale}:`, error);
-    messages = {};
+    // If import fails, try to load default English messages
+    try {
+      const fallbackModule = await import(`@/messages/en.json`);
+      messages = fallbackModule.default || fallbackModule;
+    } catch (fallbackError) {
+      // If both fail, use empty messages
+      console.error(`Failed to load messages for locale ${locale}:`, error);
+      messages = {};
+    }
   }
 
   return (
