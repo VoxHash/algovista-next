@@ -1,7 +1,7 @@
 'use client';
 
 import { useLocale } from 'next-intl';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter } from 'next-intl/client';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Globe } from 'lucide-react';
@@ -23,13 +23,11 @@ const languages = [
 export default function LanguageSwitcher() {
   const locale = useLocale();
   const router = useRouter();
-  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
   const switchLanguage = (newLocale: string) => {
-    // With 'always' locale prefix, all locales have prefixes
-    const newPath = pathname.replace(`/${locale}`, `/${newLocale}`);
-    router.push(newPath as any);
+    // Client-side language switching without URL change
+    router.replace({ locale: newLocale });
     setIsOpen(false);
   };
 

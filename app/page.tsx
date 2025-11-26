@@ -1,6 +1,10 @@
-import { redirect } from 'next/navigation';
+import AlgoVista from "@/components/AlgoVista";
 
-export default function RootPage() {
-  redirect('/en');
+// Force dynamic rendering - routes generated on-demand
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
+export default function Page() {
+  return <AlgoVista />;
 }
 
