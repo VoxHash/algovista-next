@@ -20,24 +20,26 @@ export default async function LocaleLayout({
   children: React.ReactNode;
   params: Promise<{ locale: string }> | { locale: string };
 }) {
-  try {
-    const resolvedParams = await Promise.resolve(params);
-    const locale = resolvedParams?.locale;
-    
-    if (!locale || !locales.includes(locale as any)) {
-      notFound();
-    }
-
-    const messages = await getMessages();
-
-    return (
-      <NextIntlClientProvider messages={messages}>
-        {children}
-      </NextIntlClientProvider>
-    );
-  } catch (error) {
-    // During build/prerender, if locale is invalid, return not-found
+  const resolvedParams = await Promise.resolve(params);
+  const locale = resolvedParams?.locale;
+  
+  if (!locale || !locales.includes(locale as any)) {
     notFound();
   }
+
+  // Use try-catch for getMessages in case of build-time issues
+  let messages;
+  try {
+    messages = await getMessages();
+  } catch (error) {
+    // If getMessages fails during build, use empty messages
+    messages = {};
+  }
+
+  return (
+    <NextIntlClientProvider messages={messages}>
+      {children}
+    </NextIntlClientProvider>
+  );
 }
 
