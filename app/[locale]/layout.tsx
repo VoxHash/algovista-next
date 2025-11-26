@@ -9,9 +9,9 @@ export const metadata: Metadata = {
   description: "Interactive visualizer by VoxHash",
 };
 
-export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
-}
+// Disable static generation - routes generated on-demand by middleware
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default async function LocaleLayout({
   children,
