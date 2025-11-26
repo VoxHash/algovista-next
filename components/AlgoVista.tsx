@@ -30,11 +30,22 @@ const BIGO: any = {
   astar: { best: "O(E)", avg: "O(E)", worst: "O(E)", space: "O(V)" },
   bfs: { best: "O(V+E)", avg: "O(V+E)", worst: "O(V+E)", space: "O(V)" },
   dfs: { best: "O(V+E)", avg: "O(V+E)", worst: "O(V+E)", space: "O(V)" },
+  bellmanford: { best: "O(VE)", avg: "O(VE)", worst: "O(VE)", space: "O(V)" },
+  floydwarshall: { best: "O(V³)", avg: "O(V³)", worst: "O(V³)", space: "O(V²)" },
+  greedybestfirst: { best: "O(V log V)", avg: "O(V log V)", worst: "O(V log V)", space: "O(V)" },
+  bidirectional: { best: "O(b^(d/2))", avg: "O(b^(d/2))", worst: "O(b^(d/2))", space: "O(b^(d/2))" },
+  jumppointsearch: { best: "O(V log V)", avg: "O(V log V)", worst: "O(V log V)", space: "O(V)" },
+  thetastar: { best: "O(V log V)", avg: "O(V log V)", worst: "O(V log V)", space: "O(V)" },
   kmp: { best: "O(n+m)", avg: "O(n+m)", worst: "O(n+m)", space: "O(m)" },
   rabinkarp: { best: "O(n+m)", avg: "O(n+m)", worst: "O(nm)", space: "O(1)" },
   boyermoore: { best: "O(n/m)", avg: "O(n)", worst: "O(nm)", space: "O(m)" },
   zalgorithm: { best: "O(n+m)", avg: "O(n+m)", worst: "O(n+m)", space: "O(n+m)" },
   naivestring: { best: "O(n)", avg: "O(nm)", worst: "O(nm)", space: "O(1)" },
+  ahocorasick: { best: "O(n+m+z)", avg: "O(n+m+z)", worst: "O(n+m+z)", space: "O(m)" },
+  finiteautomaton: { best: "O(n)", avg: "O(n)", worst: "O(n)", space: "O(m|Σ|)" },
+  manacher: { best: "O(n)", avg: "O(n)", worst: "O(n)", space: "O(n)" },
+  horspool: { best: "O(n/m)", avg: "O(n)", worst: "O(nm)", space: "O(m)" },
+  suffixarray: { best: "O(n log n)", avg: "O(n log n)", worst: "O(n log n)", space: "O(n)" },
   binarysearch: { best: "O(1)", avg: "O(log n)", worst: "O(log n)", space: "O(1)" },
   linearsearch: { best: "O(1)", avg: "O(n)", worst: "O(n)", space: "O(1)" },
 };
@@ -394,7 +405,7 @@ function PathfindingPanel() {
   const [rows, setRows] = useState(14);
   const [cols, setCols] = useState(24);
   const [grid, setGrid] = useState<number[][]>(()=>makeGrid(14,24));
-  const [algo, setAlgo] = useState<"dijkstra"|"astar"|"bfs"|"dfs">("dijkstra");
+  const [algo, setAlgo] = useState<"dijkstra"|"astar"|"bfs"|"dfs"|"bellmanford"|"floydwarshall"|"greedybestfirst"|"bidirectional"|"jumppointsearch"|"thetastar">("dijkstra");
   const [speed, setSpeed] = useState(60);
   const [running, setRunning] = useState(false);
   const [start] = useState({x: 2, y: 6});
@@ -413,6 +424,12 @@ function PathfindingPanel() {
       case "astar": g = aStarSteps(grid, start, goal); break;
       case "bfs": g = algoLib.bfsSteps(grid, start, goal); break;
       case "dfs": g = algoLib.dfsSteps(grid, start, goal); break;
+      case "bellmanford": g = algoLib.bellmanFordSteps(grid, start, goal); break;
+      case "floydwarshall": g = algoLib.floydWarshallSteps(grid, start, goal); break;
+      case "greedybestfirst": g = algoLib.greedyBestFirstSteps(grid, start, goal); break;
+      case "bidirectional": g = algoLib.bidirectionalSteps(grid, start, goal); break;
+      case "jumppointsearch": g = algoLib.jumpPointSearchSteps(grid, start, goal); break;
+      case "thetastar": g = algoLib.thetaStarSteps(grid, start, goal); break;
       default: g = dijkstraSteps(grid, start, goal);
     }
     setGen(g);
@@ -476,11 +493,17 @@ function PathfindingPanel() {
           <Pill>{t(`algorithms.${algo}`)}</Pill>
         </div>
         <Tabs value={algo} onValueChange={setAlgo}>
-          <TabsList>
+          <TabsList className="max-w-full overflow-x-auto">
             <TabsTrigger value="dijkstra">{t('pathfinding.dijkstra')}</TabsTrigger>
             <TabsTrigger value="astar">{t('pathfinding.astar')}</TabsTrigger>
             <TabsTrigger value="bfs">{t('algorithms.bfs')}</TabsTrigger>
             <TabsTrigger value="dfs">{t('algorithms.dfs')}</TabsTrigger>
+            <TabsTrigger value="bellmanford">{t('algorithms.bellmanFord')}</TabsTrigger>
+            <TabsTrigger value="floydwarshall">{t('algorithms.floydWarshall')}</TabsTrigger>
+            <TabsTrigger value="greedybestfirst">{t('algorithms.greedyBestFirst')}</TabsTrigger>
+            <TabsTrigger value="bidirectional">{t('algorithms.bidirectional')}</TabsTrigger>
+            <TabsTrigger value="jumppointsearch">{t('algorithms.jumpPointSearch')}</TabsTrigger>
+            <TabsTrigger value="thetastar">{t('algorithms.thetaStar')}</TabsTrigger>
           </TabsList>
         </Tabs>
       </CardHeader>
@@ -528,7 +551,7 @@ function KMPPanel() {
   const t = useTranslations();
   const [text, setText] = useState("lorem ipsum dolor sit amet ipsum");
   const [pat, setPat] = useState("ipsum");
-  const [algo, setAlgo] = useState<"kmp"|"rabinkarp"|"boyermoore"|"zalgorithm"|"naivestring">("kmp");
+  const [algo, setAlgo] = useState<"kmp"|"rabinkarp"|"boyermoore"|"zalgorithm"|"naivestring"|"ahocorasick"|"finiteautomaton"|"manacher"|"horspool"|"suffixarray">("kmp");
   const [matches, setMatches] = useState<number[]>([]);
   const [running, setRunning] = useState(false);
   const [speed, setSpeed] = useState(120);
@@ -547,6 +570,11 @@ function KMPPanel() {
         case "boyermoore": g = algoLib.boyerMooreSteps(text, pat); break;
         case "zalgorithm": g = algoLib.zAlgorithmSteps(text, pat); break;
         case "naivestring": g = algoLib.naiveStringSteps(text, pat); break;
+        case "ahocorasick": g = algoLib.ahoCorasickSteps(text, [pat]); break;
+        case "finiteautomaton": g = algoLib.finiteAutomatonSteps(text, pat); break;
+        case "manacher": g = algoLib.manacherSteps(text); break;
+        case "horspool": g = algoLib.horspoolSteps(text, pat); break;
+        case "suffixarray": g = algoLib.suffixArraySteps(text, pat); break;
         default: g = kmpSteps(text, pat);
       }
       setGen(g);
@@ -569,12 +597,17 @@ function KMPPanel() {
           <Pill>{t(`algorithms.${algo}`)}</Pill>
         </div>
         <Tabs value={algo} onValueChange={setAlgo}>
-          <TabsList>
+          <TabsList className="max-w-full overflow-x-auto">
             <TabsTrigger value="kmp">{t('kmp.kmp')}</TabsTrigger>
             <TabsTrigger value="rabinkarp">{t('algorithms.rabinKarp')}</TabsTrigger>
             <TabsTrigger value="boyermoore">{t('algorithms.boyerMoore')}</TabsTrigger>
             <TabsTrigger value="zalgorithm">{t('algorithms.zAlgorithm')}</TabsTrigger>
             <TabsTrigger value="naivestring">{t('algorithms.naiveString')}</TabsTrigger>
+            <TabsTrigger value="ahocorasick">{t('algorithms.ahoCorasick')}</TabsTrigger>
+            <TabsTrigger value="finiteautomaton">{t('algorithms.finiteAutomaton')}</TabsTrigger>
+            <TabsTrigger value="manacher">{t('algorithms.manacher')}</TabsTrigger>
+            <TabsTrigger value="horspool">{t('algorithms.horspool')}</TabsTrigger>
+            <TabsTrigger value="suffixarray">{t('algorithms.suffixArray')}</TabsTrigger>
           </TabsList>
         </Tabs>
       </CardHeader>

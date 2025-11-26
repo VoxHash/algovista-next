@@ -10,10 +10,10 @@ An interactive, resume-ready algorithm visualizer built with modern web technolo
 
 ## 🚀 Features
 
-- **20+ Algorithms**: Comprehensive collection of sorting, pathfinding, and string matching algorithms
-  - **Sorting**: Quick Sort, Merge Sort, Bubble Sort, Insertion Sort, Selection Sort, Heap Sort, Radix Sort, Counting Sort, Bucket Sort, Shell Sort
-  - **Pathfinding**: Dijkstra's, A*, BFS, DFS
-  - **String Matching**: KMP, Rabin-Karp, Boyer-Moore, Z Algorithm, Naive String Matching
+- **30+ Algorithms**: Comprehensive collection of sorting, pathfinding, and string matching algorithms
+  - **Sorting (10)**: Quick Sort, Merge Sort, Bubble Sort, Insertion Sort, Selection Sort, Heap Sort, Radix Sort, Counting Sort, Bucket Sort, Shell Sort
+  - **Pathfinding (10)**: Dijkstra's, A*, BFS, DFS, Bellman-Ford, Floyd-Warshall, Greedy Best-First, Bidirectional Search, Jump Point Search, Theta*
+  - **String Matching (10)**: KMP, Rabin-Karp, Boyer-Moore, Z Algorithm, Naive String Matching, Aho-Corasick, Finite Automaton, Manacher's Algorithm, Horspool, Suffix Array
 - **Multi-language Support**: Full i18n with 11 languages (English, Russian, Portuguese, Spanish, Estonian, French, German, Japanese, Chinese, Korean, Indonesian)
 - **Real-time Performance**: Step-by-step execution with speed controls
 - **Interactive UI**: Glassmorphism design, clickable grids, customizable parameters, and responsive design
@@ -170,18 +170,29 @@ CMD ["npm", "start"]
 - **Bucket Sort**: Distribution-based sorting
 - **Shell Sort**: Improved insertion sort with gaps
 
-### Pathfinding Algorithms (4)
+### Pathfinding Algorithms (10)
 - **Dijkstra's Algorithm**: Shortest path finding with priority queue
 - **A* Algorithm**: Heuristic-based pathfinding with Manhattan distance
 - **BFS**: Breadth-first search for unweighted graphs
 - **DFS**: Depth-first search exploration
+- **Bellman-Ford**: Handles negative weights, detects negative cycles
+- **Floyd-Warshall**: All pairs shortest path algorithm
+- **Greedy Best-First**: Heuristic-based greedy search
+- **Bidirectional Search**: Search from both start and goal simultaneously
+- **Jump Point Search**: Optimized A* for uniform-cost grids
+- **Theta***: Any-angle pathfinding with line-of-sight optimization
 
-### String Matching (5)
+### String Matching (10)
 - **KMP Algorithm**: Pattern matching with failure function optimization
 - **Rabin-Karp**: Rolling hash-based pattern matching
 - **Boyer-Moore**: Efficient pattern matching with bad character rule
 - **Z Algorithm**: Linear-time pattern matching
 - **Naive String Matching**: Simple brute-force approach
+- **Aho-Corasick**: Multiple pattern matching with trie and failure links
+- **Finite Automaton**: DFA-based pattern matching
+- **Manacher's Algorithm**: Longest palindromic substring finder
+- **Horspool**: Simplified Boyer-Moore variant
+- **Suffix Array**: Efficient pattern matching using suffix arrays
 
 ## 🎨 UI Features
 

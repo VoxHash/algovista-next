@@ -1,91 +1,99 @@
 {
-  "common": {
-    "play": "播放",
-    "pause": "暂停",
-    "step": "步骤",
-    "shuffle": "打乱",
-    "speed": "速度",
-    "size": "大小",
-    "complexity": "复杂度",
-    "best": "最佳",
-    "average": "平均",
-    "worst": "最差",
-    "space": "空间",
-    "portfolio": "作品集",
-    "github": "GitHub",
-    "youtube": "YouTube"
-  },
-  "header": {
-    "title": "AlgoVista — 算法可视化工具",
-    "madeBy": "由VoxHash制作"
-  },
-  "intro": {
-    "title": "交互式算法游乐场",
-    "feature1": "使用逐步生成器的实时动画（无阻塞循环）。",
-    "feature2": "仪表板可一目了然地可视化操作密度和复杂度。",
-    "feature3": "具有可点击墙壁和可切换算法（Dijkstra、A*）的路径查找沙盒。",
-    "feature4": "KMP字符串匹配器，具有实时LPS表更新和匹配高亮显示。",
-    "feature5": "可组合架构，支持SSR和可测试性；轻松添加您自己的算法。"
-  },
-  "sorting": {
-    "title": "排序",
-    "quickSort": "快速排序",
-    "mergeSort": "归并排序",
-    "quick": "快速",
-    "merge": "归并",
-    "writesPerStep": "每步写入",
-    "currentEvent": "当前事件"
-  },
-  "pathfinding": {
-    "title": "路径查找",
-    "dijkstra": "Dijkstra",
-    "astar": "A*",
-    "gridSize": "网格大小",
-    "rows": "行",
-    "cols": "列",
-    "legend": "图例",
-    "start": "起点",
-    "goal": "终点",
-    "visited": "已访问",
-    "relaxed": "已松弛",
-    "path": "路径",
-    "avg": "平均"
-  },
-  "kmp": {
-    "title": "字符串匹配 — KMP",
-    "kmp": "KMP",
-    "input": "输入",
-    "lpsTable": "LPS表",
-    "enterText": "输入文本...",
-    "enterPattern": "输入模式...",
-    "complexityNote": "复杂度: 最佳/平均/最差 {best} | 空间 {space}",
-    "bestAvgWorst": "最佳/平均/最差"
-  },
-  "footer": {
-    "copyright": "© 2025 AlgoVista — 使用Next.js、Tailwind、Framer Motion、Recharts构建。",
-    "openSourcePortfolio": "开源作品集"
-  },
-  "algorithms": {
-    "bubbleSort": "冒泡排序",
-    "insertionSort": "插入排序",
-    "selectionSort": "选择排序",
-    "heapSort": "堆排序",
-    "radixSort": "基数排序",
-    "countingSort": "计数排序",
-    "bucketSort": "桶排序",
-    "shellSort": "希尔排序",
-    "timSort": "Tim排序",
-    "bogoSort": "Bogo排序",
-    "bfs": "BFS",
-    "dfs": "DFS",
-    "bellmanFord": "Bellman-Ford",
-    "floydWarshall": "Floyd-Warshall",
-    "binarySearch": "二分搜索",
-    "linearSearch": "线性搜索",
-    "rabinKarp": "Rabin-Karp",
-    "boyerMoore": "Boyer-Moore",
-    "zAlgorithm": "Z算法",
-    "naiveString": "朴素字符串匹配"
-  }
+    "common":  {
+                   "play":  "播放",
+                   "pause":  "暂停",
+                   "step":  "步骤",
+                   "shuffle":  "打乱",
+                   "speed":  "速度",
+                   "size":  "大小",
+                   "complexity":  "复杂度",
+                   "best":  "最佳",
+                   "average":  "平均",
+                   "worst":  "最差",
+                   "space":  "空间",
+                   "portfolio":  "作品集",
+                   "github":  "GitHub",
+                   "youtube":  "YouTube"
+               },
+    "header":  {
+                   "title":  "AlgoVista — 算法可视化工具",
+                   "madeBy":  "由VoxHash制作"
+               },
+    "intro":  {
+                  "title":  "交互式算法游乐场",
+                  "feature1":  "使用逐步生成器的实时动画（无阻塞循环）。",
+                  "feature2":  "仪表板可一目了然地可视化操作密度和复杂度。",
+                  "feature3":  "具有可点击墙壁和可切换算法（Dijkstra、A*）的路径查找沙盒。",
+                  "feature4":  "KMP字符串匹配器，具有实时LPS表更新和匹配高亮显示。",
+                  "feature5":  "可组合架构，支持SSR和可测试性；轻松添加您自己的算法。"
+              },
+    "sorting":  {
+                    "title":  "排序",
+                    "quickSort":  "快速排序",
+                    "mergeSort":  "归并排序",
+                    "quick":  "快速",
+                    "merge":  "归并",
+                    "writesPerStep":  "每步写入",
+                    "currentEvent":  "当前事件"
+                },
+    "pathfinding":  {
+                        "title":  "路径查找",
+                        "dijkstra":  "Dijkstra",
+                        "astar":  "A*",
+                        "gridSize":  "网格大小",
+                        "rows":  "行",
+                        "cols":  "列",
+                        "legend":  "图例",
+                        "start":  "起点",
+                        "goal":  "终点",
+                        "visited":  "已访问",
+                        "relaxed":  "已松弛",
+                        "path":  "路径",
+                        "avg":  "平均"
+                    },
+    "kmp":  {
+                "title":  "字符串匹配 — KMP",
+                "kmp":  "KMP",
+                "input":  "输入",
+                "lpsTable":  "LPS表",
+                "enterText":  "输入文本...",
+                "enterPattern":  "输入模式...",
+                "complexityNote":  "复杂度: 最佳/平均/最差 {best} | 空间 {space}",
+                "bestAvgWorst":  "最佳/平均/最差"
+            },
+    "footer":  {
+                   "copyright":  "© 2025 AlgoVista — 使用Next.js、Tailwind、Framer Motion、Recharts构建。",
+                   "openSourcePortfolio":  "开源作品集"
+               },
+    "algorithms":  {
+                       "bubbleSort":  "冒泡排序",
+                       "insertionSort":  "插入排序",
+                       "selectionSort":  "选择排序",
+                       "heapSort":  "堆排序",
+                       "radixSort":  "基数排序",
+                       "countingSort":  "计数排序",
+                       "bucketSort":  "桶排序",
+                       "shellSort":  "希尔排序",
+                       "timSort":  "Tim排序",
+                       "bogoSort":  "Bogo排序",
+                       "bfs":  "BFS",
+                       "dfs":  "DFS",
+                       "bellmanFord":  "Bellman-Ford",
+                       "floydWarshall":  "Floyd-Warshall",
+                       "binarySearch":  "二分搜索",
+                       "linearSearch":  "线性搜索",
+                       "rabinKarp":  "Rabin-Karp",
+                       "boyerMoore":  "Boyer-Moore",
+                       "zAlgorithm":  "Z算法",
+                       "naiveString":  "朴素字符串匹配",
+                       "greedyBestFirst":  "Greedy Best-First",
+                       "bidirectional":  "Bidirectional Search",
+                       "jumpPointSearch":  "Jump Point Search",
+                       "thetaStar":  "Theta*",
+                       "ahoCorasick":  "Aho-Corasick",
+                       "finiteAutomaton":  "Finite Automaton",
+                       "manacher":  "Manacher\u0027s Algorithm",
+                       "horspool":  "Horspool",
+                       "suffixArray":  "Suffix Array"
+                   }
 }
-

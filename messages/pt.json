@@ -1,91 +1,99 @@
 {
-  "common": {
-    "play": "Reproduzir",
-    "pause": "Pausar",
-    "step": "Passo",
-    "shuffle": "Embaralhar",
-    "speed": "Velocidade",
-    "size": "Tamanho",
-    "complexity": "Complexidade",
-    "best": "Melhor",
-    "average": "Média",
-    "worst": "Pior",
-    "space": "Espaço",
-    "portfolio": "Portfólio",
-    "github": "GitHub",
-    "youtube": "YouTube"
-  },
-  "header": {
-    "title": "AlgoVista — Visualizador de Algoritmos",
-    "madeBy": "Feito por VoxHash"
-  },
-  "intro": {
-    "title": "Playground Interativo de Algoritmos",
-    "feature1": "Animações em tempo real com geradores passo a passo (sem loops bloqueantes).",
-    "feature2": "Painel de instrumentação para visualizar densidade de operações e complexidade rapidamente.",
-    "feature3": "Sandbox de busca de caminho com paredes clicáveis e algoritmos alternáveis (Dijkstra, A*).",
-    "feature4": "Correspondente de strings KMP com atualizações da tabela LPS ao vivo e destaque de correspondências.",
-    "feature5": "Arquitetura composável pronta para SSR e testabilidade; adicione seus próprios algoritmos facilmente."
-  },
-  "sorting": {
-    "title": "Ordenação",
-    "quickSort": "Quick Sort",
-    "mergeSort": "Merge Sort",
-    "quick": "Quick",
-    "merge": "Merge",
-    "writesPerStep": "Escritas por passo",
-    "currentEvent": "Evento Atual"
-  },
-  "pathfinding": {
-    "title": "Busca de Caminho",
-    "dijkstra": "Dijkstra",
-    "astar": "A*",
-    "gridSize": "Tamanho da Grade",
-    "rows": "Linhas",
-    "cols": "Colunas",
-    "legend": "Legenda",
-    "start": "Início",
-    "goal": "Objetivo",
-    "visited": "Visitado",
-    "relaxed": "Relaxado",
-    "path": "Caminho",
-    "avg": "Média"
-  },
-  "kmp": {
-    "title": "Correspondência de Strings — KMP",
-    "kmp": "KMP",
-    "input": "Entrada",
-    "lpsTable": "Tabela LPS",
-    "enterText": "Digite o texto...",
-    "enterPattern": "Digite o padrão...",
-    "complexityNote": "Complexidade: Melhor/Média/Pior {best} | Espaço {space}",
-    "bestAvgWorst": "Melhor/Média/Pior"
-  },
-  "footer": {
-    "copyright": "© 2025 AlgoVista — Construído com Next.js, Tailwind, Framer Motion, Recharts.",
-    "openSourcePortfolio": "Portfólio de Código Aberto"
-  },
-  "algorithms": {
-    "bubbleSort": "Bubble Sort",
-    "insertionSort": "Insertion Sort",
-    "selectionSort": "Selection Sort",
-    "heapSort": "Heap Sort",
-    "radixSort": "Radix Sort",
-    "countingSort": "Counting Sort",
-    "bucketSort": "Bucket Sort",
-    "shellSort": "Shell Sort",
-    "timSort": "Tim Sort",
-    "bogoSort": "Bogo Sort",
-    "bfs": "BFS",
-    "dfs": "DFS",
-    "bellmanFord": "Bellman-Ford",
-    "floydWarshall": "Floyd-Warshall",
-    "binarySearch": "Busca Binária",
-    "linearSearch": "Busca Linear",
-    "rabinKarp": "Rabin-Karp",
-    "boyerMoore": "Boyer-Moore",
-    "zAlgorithm": "Algoritmo Z",
-    "naiveString": "Correspondência de Strings Ingênua"
-  }
+    "common":  {
+                   "play":  "Reproduzir",
+                   "pause":  "Pausar",
+                   "step":  "Passo",
+                   "shuffle":  "Embaralhar",
+                   "speed":  "Velocidade",
+                   "size":  "Tamanho",
+                   "complexity":  "Complexidade",
+                   "best":  "Melhor",
+                   "average":  "Média",
+                   "worst":  "Pior",
+                   "space":  "Espaço",
+                   "portfolio":  "Portfólio",
+                   "github":  "GitHub",
+                   "youtube":  "YouTube"
+               },
+    "header":  {
+                   "title":  "AlgoVista — Visualizador de Algoritmos",
+                   "madeBy":  "Feito por VoxHash"
+               },
+    "intro":  {
+                  "title":  "Playground Interativo de Algoritmos",
+                  "feature1":  "Animações em tempo real com geradores passo a passo (sem loops bloqueantes).",
+                  "feature2":  "Painel de instrumentação para visualizar densidade de operações e complexidade rapidamente.",
+                  "feature3":  "Sandbox de busca de caminho com paredes clicáveis e algoritmos alternáveis (Dijkstra, A*).",
+                  "feature4":  "Correspondente de strings KMP com atualizações da tabela LPS ao vivo e destaque de correspondências.",
+                  "feature5":  "Arquitetura composável pronta para SSR e testabilidade; adicione seus próprios algoritmos facilmente."
+              },
+    "sorting":  {
+                    "title":  "Ordenação",
+                    "quickSort":  "Quick Sort",
+                    "mergeSort":  "Merge Sort",
+                    "quick":  "Quick",
+                    "merge":  "Merge",
+                    "writesPerStep":  "Escritas por passo",
+                    "currentEvent":  "Evento Atual"
+                },
+    "pathfinding":  {
+                        "title":  "Busca de Caminho",
+                        "dijkstra":  "Dijkstra",
+                        "astar":  "A*",
+                        "gridSize":  "Tamanho da Grade",
+                        "rows":  "Linhas",
+                        "cols":  "Colunas",
+                        "legend":  "Legenda",
+                        "start":  "Início",
+                        "goal":  "Objetivo",
+                        "visited":  "Visitado",
+                        "relaxed":  "Relaxado",
+                        "path":  "Caminho",
+                        "avg":  "Média"
+                    },
+    "kmp":  {
+                "title":  "Correspondência de Strings — KMP",
+                "kmp":  "KMP",
+                "input":  "Entrada",
+                "lpsTable":  "Tabela LPS",
+                "enterText":  "Digite o texto...",
+                "enterPattern":  "Digite o padrão...",
+                "complexityNote":  "Complexidade: Melhor/Média/Pior {best} | Espaço {space}",
+                "bestAvgWorst":  "Melhor/Média/Pior"
+            },
+    "footer":  {
+                   "copyright":  "© 2025 AlgoVista — Construído com Next.js, Tailwind, Framer Motion, Recharts.",
+                   "openSourcePortfolio":  "Portfólio de Código Aberto"
+               },
+    "algorithms":  {
+                       "bubbleSort":  "Bubble Sort",
+                       "insertionSort":  "Insertion Sort",
+                       "selectionSort":  "Selection Sort",
+                       "heapSort":  "Heap Sort",
+                       "radixSort":  "Radix Sort",
+                       "countingSort":  "Counting Sort",
+                       "bucketSort":  "Bucket Sort",
+                       "shellSort":  "Shell Sort",
+                       "timSort":  "Tim Sort",
+                       "bogoSort":  "Bogo Sort",
+                       "bfs":  "BFS",
+                       "dfs":  "DFS",
+                       "bellmanFord":  "Bellman-Ford",
+                       "floydWarshall":  "Floyd-Warshall",
+                       "binarySearch":  "Busca Binária",
+                       "linearSearch":  "Busca Linear",
+                       "rabinKarp":  "Rabin-Karp",
+                       "boyerMoore":  "Boyer-Moore",
+                       "zAlgorithm":  "Algoritmo Z",
+                       "naiveString":  "Correspondência de Strings Ingênua",
+                       "greedyBestFirst":  "Greedy Best-First",
+                       "bidirectional":  "Bidirectional Search",
+                       "jumpPointSearch":  "Jump Point Search",
+                       "thetaStar":  "Theta*",
+                       "ahoCorasick":  "Aho-Corasick",
+                       "finiteAutomaton":  "Finite Automaton",
+                       "manacher":  "Manacher\u0027s Algorithm",
+                       "horspool":  "Horspool",
+                       "suffixArray":  "Suffix Array"
+                   }
 }
-

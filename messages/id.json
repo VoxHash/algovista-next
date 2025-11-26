@@ -1,91 +1,99 @@
 {
-  "common": {
-    "play": "Putar",
-    "pause": "Jeda",
-    "step": "Langkah",
-    "shuffle": "Acak",
-    "speed": "Kecepatan",
-    "size": "Ukuran",
-    "complexity": "Kompleksitas",
-    "best": "Terbaik",
-    "average": "Rata-rata",
-    "worst": "Terburuk",
-    "space": "Ruang",
-    "portfolio": "Portofolio",
-    "github": "GitHub",
-    "youtube": "YouTube"
-  },
-  "header": {
-    "title": "AlgoVista — Visualisator Algoritma",
-    "madeBy": "Dibuat oleh VoxHash"
-  },
-  "intro": {
-    "title": "Playground Algoritma Interaktif",
-    "feature1": "Animasi waktu nyata dengan generator langkah demi langkah (tanpa loop yang memblokir).",
-    "feature2": "Panel instrumentasi untuk memvisualisasikan kepadatan operasi dan kompleksitas sekilas.",
-    "feature3": "Sandbox pencarian jalur dengan dinding yang dapat diklik dan algoritma yang dapat diganti (Dijkstra, A*).",
-    "feature4": "Pencocok string KMP dengan pembaruan tabel LPS langsung dan penyorotan kecocokan.",
-    "feature5": "Arsitektur yang dapat dikomposisi siap untuk SSR dan kemampuan pengujian; tambahkan algoritma Anda sendiri dengan mudah."
-  },
-  "sorting": {
-    "title": "Pengurutan",
-    "quickSort": "Quick Sort",
-    "mergeSort": "Merge Sort",
-    "quick": "Quick",
-    "merge": "Merge",
-    "writesPerStep": "Penulisan per langkah",
-    "currentEvent": "Peristiwa Saat Ini"
-  },
-  "pathfinding": {
-    "title": "Pencarian Jalur",
-    "dijkstra": "Dijkstra",
-    "astar": "A*",
-    "gridSize": "Ukuran Grid",
-    "rows": "Baris",
-    "cols": "Kolom",
-    "legend": "Legenda",
-    "start": "Mulai",
-    "goal": "Tujuan",
-    "visited": "Dikunjungi",
-    "relaxed": "Direlaksasi",
-    "path": "Jalur",
-    "avg": "Rata-rata"
-  },
-  "kmp": {
-    "title": "Pencocokan String — KMP",
-    "kmp": "KMP",
-    "input": "Masukan",
-    "lpsTable": "Tabel LPS",
-    "enterText": "Masukkan teks...",
-    "enterPattern": "Masukkan pola...",
-    "complexityNote": "Kompleksitas: Terbaik/Rata-rata/Terburuk {best} | Ruang {space}",
-    "bestAvgWorst": "Terbaik/Rata-rata/Terburuk"
-  },
-  "footer": {
-    "copyright": "© 2025 AlgoVista — Dibangun dengan Next.js, Tailwind, Framer Motion, Recharts.",
-    "openSourcePortfolio": "Portofolio Sumber Terbuka"
-  },
-  "algorithms": {
-    "bubbleSort": "Bubble Sort",
-    "insertionSort": "Insertion Sort",
-    "selectionSort": "Selection Sort",
-    "heapSort": "Heap Sort",
-    "radixSort": "Radix Sort",
-    "countingSort": "Counting Sort",
-    "bucketSort": "Bucket Sort",
-    "shellSort": "Shell Sort",
-    "timSort": "Tim Sort",
-    "bogoSort": "Bogo Sort",
-    "bfs": "BFS",
-    "dfs": "DFS",
-    "bellmanFord": "Bellman-Ford",
-    "floydWarshall": "Floyd-Warshall",
-    "binarySearch": "Pencarian Biner",
-    "linearSearch": "Pencarian Linear",
-    "rabinKarp": "Rabin-Karp",
-    "boyerMoore": "Boyer-Moore",
-    "zAlgorithm": "Algoritma Z",
-    "naiveString": "Pencocokan String Naif"
-  }
+    "common":  {
+                   "play":  "Putar",
+                   "pause":  "Jeda",
+                   "step":  "Langkah",
+                   "shuffle":  "Acak",
+                   "speed":  "Kecepatan",
+                   "size":  "Ukuran",
+                   "complexity":  "Kompleksitas",
+                   "best":  "Terbaik",
+                   "average":  "Rata-rata",
+                   "worst":  "Terburuk",
+                   "space":  "Ruang",
+                   "portfolio":  "Portofolio",
+                   "github":  "GitHub",
+                   "youtube":  "YouTube"
+               },
+    "header":  {
+                   "title":  "AlgoVista — Visualisator Algoritma",
+                   "madeBy":  "Dibuat oleh VoxHash"
+               },
+    "intro":  {
+                  "title":  "Playground Algoritma Interaktif",
+                  "feature1":  "Animasi waktu nyata dengan generator langkah demi langkah (tanpa loop yang memblokir).",
+                  "feature2":  "Panel instrumentasi untuk memvisualisasikan kepadatan operasi dan kompleksitas sekilas.",
+                  "feature3":  "Sandbox pencarian jalur dengan dinding yang dapat diklik dan algoritma yang dapat diganti (Dijkstra, A*).",
+                  "feature4":  "Pencocok string KMP dengan pembaruan tabel LPS langsung dan penyorotan kecocokan.",
+                  "feature5":  "Arsitektur yang dapat dikomposisi siap untuk SSR dan kemampuan pengujian; tambahkan algoritma Anda sendiri dengan mudah."
+              },
+    "sorting":  {
+                    "title":  "Pengurutan",
+                    "quickSort":  "Quick Sort",
+                    "mergeSort":  "Merge Sort",
+                    "quick":  "Quick",
+                    "merge":  "Merge",
+                    "writesPerStep":  "Penulisan per langkah",
+                    "currentEvent":  "Peristiwa Saat Ini"
+                },
+    "pathfinding":  {
+                        "title":  "Pencarian Jalur",
+                        "dijkstra":  "Dijkstra",
+                        "astar":  "A*",
+                        "gridSize":  "Ukuran Grid",
+                        "rows":  "Baris",
+                        "cols":  "Kolom",
+                        "legend":  "Legenda",
+                        "start":  "Mulai",
+                        "goal":  "Tujuan",
+                        "visited":  "Dikunjungi",
+                        "relaxed":  "Direlaksasi",
+                        "path":  "Jalur",
+                        "avg":  "Rata-rata"
+                    },
+    "kmp":  {
+                "title":  "Pencocokan String — KMP",
+                "kmp":  "KMP",
+                "input":  "Masukan",
+                "lpsTable":  "Tabel LPS",
+                "enterText":  "Masukkan teks...",
+                "enterPattern":  "Masukkan pola...",
+                "complexityNote":  "Kompleksitas: Terbaik/Rata-rata/Terburuk {best} | Ruang {space}",
+                "bestAvgWorst":  "Terbaik/Rata-rata/Terburuk"
+            },
+    "footer":  {
+                   "copyright":  "© 2025 AlgoVista — Dibangun dengan Next.js, Tailwind, Framer Motion, Recharts.",
+                   "openSourcePortfolio":  "Portofolio Sumber Terbuka"
+               },
+    "algorithms":  {
+                       "bubbleSort":  "Bubble Sort",
+                       "insertionSort":  "Insertion Sort",
+                       "selectionSort":  "Selection Sort",
+                       "heapSort":  "Heap Sort",
+                       "radixSort":  "Radix Sort",
+                       "countingSort":  "Counting Sort",
+                       "bucketSort":  "Bucket Sort",
+                       "shellSort":  "Shell Sort",
+                       "timSort":  "Tim Sort",
+                       "bogoSort":  "Bogo Sort",
+                       "bfs":  "BFS",
+                       "dfs":  "DFS",
+                       "bellmanFord":  "Bellman-Ford",
+                       "floydWarshall":  "Floyd-Warshall",
+                       "binarySearch":  "Pencarian Biner",
+                       "linearSearch":  "Pencarian Linear",
+                       "rabinKarp":  "Rabin-Karp",
+                       "boyerMoore":  "Boyer-Moore",
+                       "zAlgorithm":  "Algoritma Z",
+                       "naiveString":  "Pencocokan String Naif",
+                       "greedyBestFirst":  "Greedy Best-First",
+                       "bidirectional":  "Bidirectional Search",
+                       "jumpPointSearch":  "Jump Point Search",
+                       "thetaStar":  "Theta*",
+                       "ahoCorasick":  "Aho-Corasick",
+                       "finiteAutomaton":  "Finite Automaton",
+                       "manacher":  "Manacher\u0027s Algorithm",
+                       "horspool":  "Horspool",
+                       "suffixArray":  "Suffix Array"
+                   }
 }
-
