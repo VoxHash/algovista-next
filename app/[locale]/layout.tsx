@@ -13,6 +13,9 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
+export const dynamic = 'force-static';
+export const revalidate = false;
+
 export default async function LocaleLayout({
   children,
   params
