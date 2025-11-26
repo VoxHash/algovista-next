@@ -1,33 +1,16 @@
 import './globals.css';
-import { NextIntlClientProvider } from 'next-intl';
-import { getMessages, getLocale } from 'next-intl/server';
 import HtmlLangSetter from '@/components/HtmlLangSetter';
-import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "AlgoVista — Algorithm Visualizer",
-  description: "Interactive visualizer by VoxHash",
-};
-
-// Force dynamic rendering - routes generated on-demand
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
-
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const locale = await getLocale();
-  const messages = await getMessages();
-
   return (
-    <html lang={locale}>
+    <html lang="en">
       <body>
-        <NextIntlClientProvider messages={messages}>
-          <HtmlLangSetter />
-          {children}
-        </NextIntlClientProvider>
+        <HtmlLangSetter />
+        {children}
       </body>
     </html>
   );
