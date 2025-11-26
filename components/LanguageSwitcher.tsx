@@ -28,13 +28,9 @@ export default function LanguageSwitcher() {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('locale');
-      if (saved && saved !== locale) {
-        const newPath = pathname.replace(`/${locale}`, `/${saved}`);
-        router.push(newPath as any);
-      }
+      localStorage.setItem('locale', locale);
     }
-  }, []);
+  }, [locale]);
 
   const switchLanguage = (newLocale: string) => {
     if (typeof window !== 'undefined') {
