@@ -90,7 +90,7 @@ function CategoryCard({
   };
 
   return (
-    <Link href={href}>
+    <Link href={href as any}>
       <Card className="h-full hover:scale-105 transition-transform cursor-pointer">
         <CardHeader>
           <div className="flex items-center gap-3">
