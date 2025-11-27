@@ -658,15 +658,25 @@ export function StringMatchingAlgorithmCard({ algo }: { algo: StringMatchingAlgo
             </div>
           </div>
           <div className="rounded-xl p-3 glass-light">
-            <div className="text-xs text-slate-300 mb-2">LPS Table</div>
-            <div className="flex flex-wrap gap-1 text-sm font-mono">
-              {pat.split("").map((c,i)=> (
-                <div key={i} className="px-2 py-1 rounded glass-light border-white/10 flex items-center gap-2">
-                  <span className="text-slate-200">{c}</span>
-                  <span className="text-emerald-400 font-bold">{lps[i] ?? "·"}</span>
-                </div>
-              ))}
+            <div className="text-xs text-slate-300 mb-2">
+              {algo === "kmp" ? "LPS Table" : algo === "boyermoore" || algo === "horspool" ? "Shift Table" : "Algorithm Data"}
             </div>
+            {algo === "kmp" && lps.length > 0 ? (
+              <div className="flex flex-wrap gap-1 text-sm font-mono">
+                {pat.split("").map((c,i)=> (
+                  <div key={i} className="px-2 py-1 rounded glass-light border-white/10 flex items-center gap-2">
+                    <span className="text-slate-200">{c}</span>
+                    <span className="text-emerald-400 font-bold">{lps[i] ?? 0}</span>
+                  </div>
+                ))}
+              </div>
+            ) : algo === "kmp" ? (
+              <div className="text-xs text-slate-400 italic">Click Play or Step to build LPS table</div>
+            ) : (
+              <div className="text-xs text-slate-400 italic">
+                {algo === "boyermoore" || algo === "horspool" ? "Shift table not visualized" : "No table for this algorithm"}
+              </div>
+            )}
             <div className="mt-3 text-xs text-slate-300">Complexity: Best/Avg/Worst {BIGO[algo].best} | Space {BIGO[algo].space}</div>
           </div>
         </div>
