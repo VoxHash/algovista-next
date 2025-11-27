@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Play, Pause, StepForward, Shuffle, Github, Code2, Cpu, Route, ListOrdered, Binary, Activity } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -316,12 +316,13 @@ export function SortingAlgorithmCard({ algo }: { algo: SortingAlgo }) {
   const [size, setSize] = useState(30);
   const [arr, setArr] = useState<number[]>(() => rand(30));
   const [gen, setGen] = useState<Generator<any> | null>(null);
+  const genRef = useRef<Generator<any> | null>(null);
   const [highlight, setHighlight] = useState<any>({});
   const [running, setRunning] = useState(false);
   const [speed, setSpeed] = useState(120);
   const [ops, setOps] = useState<{t:number,op:string}[]>([]);
 
-  useEffect(()=>{ setArr(rand(size)); setOps([]); setHighlight({}); setRunning(false); setGen(null); }, [size]);
+  useEffect(()=>{ setArr(rand(size)); setOps([]); setHighlight({}); setRunning(false); setGen(null); genRef.current = null; }, [size]);
 
   const makeGen = () => {
     let g: Generator<any>;
@@ -339,11 +340,14 @@ export function SortingAlgorithmCard({ algo }: { algo: SortingAlgo }) {
       default: g = quickSortSteps(arr);
     }
     setGen(g);
+    genRef.current = g;
   };
 
   const step = () => {
-    if (!gen) makeGen();
-    const { value, done } = (gen || { next: ()=>({done:true}) } as any).next();
+    if (!genRef.current) makeGen();
+    const currentGen = genRef.current;
+    if (!currentGen) return;
+    const { value, done } = currentGen.next();
     if (done) { setRunning(false); return; }
     if (value?.array) setArr(value.array as number[]);
     setHighlight(value || {});
@@ -355,7 +359,7 @@ export function SortingAlgorithmCard({ algo }: { algo: SortingAlgo }) {
     const tick = ()=>{ step(); id = setTimeout(tick, speed); };
     id = setTimeout(tick, speed);
     return ()=>clearTimeout(id);
-  }, [running, speed, gen]);
+  }, [running, speed, arr, algo]);
 
   const bars = arr.map((v, i) => {
     const isA = (highlight as any).a === i || (highlight as any).i === i;
@@ -572,13 +576,14 @@ export function StringMatchingAlgorithmCard({ algo }: { algo: StringMatchingAlgo
   const [running, setRunning] = useState(false);
   const [speed, setSpeed] = useState(120);
   const [gen, setGen] = useState<Generator<any> | null>(null);
+  const genRef = useRef<Generator<any> | null>(null);
   const [lps, setLps] = useState<number[]>([]);
   const [pos, setPos] = useState<{ i:number, j:number }>({ i: -1, j: -1 });
 
-  const reset = () => { setMatches([]); setGen(null); setRunning(false); setLps([]); setPos({i:-1,j:-1}); };
+  const reset = () => { setMatches([]); setGen(null); genRef.current = null; setRunning(false); setLps([]); setPos({i:-1,j:-1}); };
 
   const step = () => {
-    if (!gen) {
+    if (!genRef.current) {
       let g: Generator<any>;
       switch(algo) {
         case "kmp": g = kmpSteps(text, pat); break;
@@ -594,15 +599,18 @@ export function StringMatchingAlgorithmCard({ algo }: { algo: StringMatchingAlgo
         default: g = kmpSteps(text, pat);
       }
       setGen(g);
+      genRef.current = g;
     }
-    const { value, done } = (gen || { next: ()=>({done:true}) } as any).next();
+    const currentGen = genRef.current;
+    if (!currentGen) return;
+    const { value, done } = currentGen.next();
     if (done) { setRunning(false); return; }
     if (value?.type === 'lps') setLps(value.lps);
     if (value?.type === 'compare') setPos({ i: value.i, j: value.j });
     if (value?.type === 'match') setMatches((m)=>[...m, value.index]);
   };
 
-  useEffect(()=>{ if(!running) return; let id:any; const tick=()=>{ step(); id=setTimeout(tick, speed); }; id=setTimeout(tick, speed); return ()=>clearTimeout(id); }, [running, speed, gen]);
+  useEffect(()=>{ if(!running) return; let id:any; const tick=()=>{ step(); id=setTimeout(tick, speed); }; id=setTimeout(tick, speed); return ()=>clearTimeout(id); }, [running, speed, text, pat, algo]);
 
   return (
     <Card>
