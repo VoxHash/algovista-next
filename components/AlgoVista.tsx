@@ -249,7 +249,7 @@ function* aStarSteps(grid: number[][], start:{x:number,y:number}, goal:{x:number
   yield { type: "done", path: path.reverse() };
 }
 
-const Pill: React.FC<React.PropsWithChildren<{ className?: string }>> = ({ children, className }) => (
+export const Pill: React.FC<React.PropsWithChildren<{ className?: string }>> = ({ children, className }) => (
   <span className={`px-2 py-1 rounded-full bg-gradient-to-r from-indigo-500/20 to-fuchsia-500/20 backdrop-blur-sm text-indigo-200 text-xs border border-white/20 shadow-sm ${className || ''}`}>
     {children}
   </span>
@@ -311,8 +311,8 @@ function ControlBar({ running, onPlay, onPause, onStep, onShuffle, speed, setSpe
 }
 
 // Individual Sorting Algorithm Card
-type SortingAlgo = "quicksort"|"mergesort"|"bubblesort"|"insertionsort"|"selectionsort"|"heapsort"|"radixsort"|"countingsort"|"bucketsort"|"shellsort";
-function SortingAlgorithmCard({ algo }: { algo: SortingAlgo }) {
+export type SortingAlgo = "quicksort"|"mergesort"|"bubblesort"|"insertionsort"|"selectionsort"|"heapsort"|"radixsort"|"countingsort"|"bucketsort"|"shellsort";
+export function SortingAlgorithmCard({ algo }: { algo: SortingAlgo }) {
   const [size, setSize] = useState(30);
   const [arr, setArr] = useState<number[]>(() => rand(30));
   const [gen, setGen] = useState<Generator<any> | null>(null);
@@ -432,8 +432,8 @@ function makeGrid(r:number, c:number, wallProb=0.2) {
 }
 
 // Individual Pathfinding Algorithm Card
-type PathfindingAlgo = "dijkstra"|"astar"|"bfs"|"dfs"|"bellmanford"|"floydwarshall"|"greedybestfirst"|"bidirectional"|"jumppointsearch"|"thetastar";
-function PathfindingAlgorithmCard({ algo }: { algo: PathfindingAlgo }) {
+export type PathfindingAlgo = "dijkstra"|"astar"|"bfs"|"dfs"|"bellmanford"|"floydwarshall"|"greedybestfirst"|"bidirectional"|"jumppointsearch"|"thetastar";
+export function PathfindingAlgorithmCard({ algo }: { algo: PathfindingAlgo }) {
   const [rows, setRows] = useState(14);
   const [cols, setCols] = useState(24);
   const [grid, setGrid] = useState<number[][]>(()=>makeGrid(14,24));
@@ -564,8 +564,8 @@ function PathfindingAlgorithmCard({ algo }: { algo: PathfindingAlgo }) {
 }
 
 // Individual String Matching Algorithm Card
-type StringMatchingAlgo = "kmp"|"rabinkarp"|"boyermoore"|"zalgorithm"|"naivestring"|"ahocorasick"|"finiteautomaton"|"manacher"|"horspool"|"suffixarray";
-function StringMatchingAlgorithmCard({ algo }: { algo: StringMatchingAlgo }) {
+export type StringMatchingAlgo = "kmp"|"rabinkarp"|"boyermoore"|"zalgorithm"|"naivestring"|"ahocorasick"|"finiteautomaton"|"manacher"|"horspool"|"suffixarray";
+export function StringMatchingAlgorithmCard({ algo }: { algo: StringMatchingAlgo }) {
   const [text, setText] = useState("lorem ipsum dolor sit amet ipsum");
   const [pat, setPat] = useState("ipsum");
   const [matches, setMatches] = useState<number[]>([]);
@@ -663,131 +663,4 @@ function StringMatchingAlgorithmCard({ algo }: { algo: StringMatchingAlgo }) {
   );
 }
 
-export default function AlgoVista() {
-  const currentDate: Date = new Date();
-  const formattedDate: string = currentDate.toLocaleDateString('en-US', {
-    weekday: 'short',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-  
-  const sortingAlgorithms: SortingAlgo[] = ["quicksort", "mergesort", "bubblesort", "insertionsort", "selectionsort", "heapsort", "radixsort", "countingsort", "bucketsort", "shellsort"];
-  const pathfindingAlgorithms: PathfindingAlgo[] = ["dijkstra", "astar", "bfs", "dfs", "bellmanford", "floydwarshall", "greedybestfirst", "bidirectional", "jumppointsearch", "thetastar"];
-  const stringMatchingAlgorithms: StringMatchingAlgo[] = ["kmp", "rabinkarp", "boyermoore", "zalgorithm", "naivestring", "ahocorasick", "finiteautomaton", "manacher", "horspool", "suffixarray"];
-
-  return (
-    <div className="min-h-screen w-full text-slate-100 relative z-10">
-      <header className="sticky top-0 z-50 glass-strong border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
-            <Cpu className="h-5 w-5 text-fuchsia-400 drop-shadow-lg flex-shrink-0"/>
-            <h1 className="text-base sm:text-lg font-semibold tracking-tight bg-gradient-to-r from-indigo-200 to-fuchsia-200 bg-clip-text text-transparent truncate">AlgoVista — Algorithm Visualizer</h1>
-            <Pill className="hidden sm:inline-flex flex-shrink-0">{formattedDate}</Pill>
-          </div>
-          <div className="flex items-center gap-2 flex-shrink-0">
-            <a href="https://voxhash.dev/" target="_blank" rel="noreferrer">
-              <Button variant="ghost" size="sm" className="hidden sm:inline-flex">Portfolio</Button>
-            </a>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <a href="https://github.com/VoxHash/algovista-next" target="_blank" rel="noreferrer">
-                    <Button variant="outline" size="icon" aria-label="View Source Code">
-                      <Code2 className="h-4 w-4"/>
-                    </Button>
-                  </a>
-                </TooltipTrigger>
-                <TooltipContent>View Source Code</TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
-        </div>
-      </header>
-
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6 space-y-6 sm:space-y-8 relative z-10">
-        <IntroCard />
-        
-        {/* Sorting Algorithms Section */}
-        <div className="space-y-4">
-          <div className="flex items-center gap-3">
-            <ListOrdered className="h-6 w-6 text-indigo-400 drop-shadow-lg"/>
-            <h2 className="text-2xl font-bold bg-gradient-to-r from-indigo-200 to-fuchsia-200 bg-clip-text text-transparent">Sorting Algorithms</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
-            {sortingAlgorithms.map((algo) => (
-              <SortingAlgorithmCard key={algo} algo={algo} />
-            ))}
-          </div>
-        </div>
-
-        {/* Pathfinding Algorithms Section */}
-        <div className="space-y-4">
-          <div className="flex items-center gap-3">
-            <Route className="h-6 w-6 text-fuchsia-400 drop-shadow-lg"/>
-            <h2 className="text-2xl font-bold bg-gradient-to-r from-indigo-200 to-fuchsia-200 bg-clip-text text-transparent">Pathfinding Algorithms</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
-            {pathfindingAlgorithms.map((algo) => (
-              <PathfindingAlgorithmCard key={algo} algo={algo} />
-            ))}
-          </div>
-        </div>
-
-        {/* String Matching Algorithms Section */}
-        <div className="space-y-4">
-          <div className="flex items-center gap-3">
-            <Binary className="h-6 w-6 text-emerald-400 drop-shadow-lg"/>
-            <h2 className="text-2xl font-bold bg-gradient-to-r from-indigo-200 to-fuchsia-200 bg-clip-text text-transparent">String Matching Algorithms</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
-            {stringMatchingAlgorithms.map((algo) => (
-              <StringMatchingAlgorithmCard key={algo} algo={algo} />
-            ))}
-          </div>
-        </div>
-
-        <FooterCard />
-      </main>
-    </div>
-  );
-}
-
-function IntroCard() {
-  return (
-    <Card>
-      <CardHeader className="flex items-center justify-between gap-2">
-        <div className="flex items-center gap-3">
-          <Activity className="h-5 w-5 text-indigo-400 drop-shadow-lg"/>
-          <CardTitle className="text-indigo-100">Interactive Algorithm Playground</CardTitle>
-          <Pill>Made by VoxHash</Pill>
-        </div>
-      </CardHeader>
-      <CardContent className="text-sm text-slate-200 leading-relaxed">
-        <ul className="list-disc pl-6 space-y-1">
-          <li>Real-time animations with step-by-step generators (no blocking loops).</li>
-          <li>Instrumentation panel to visualize operation density and complexity at a glance.</li>
-          <li>Pathfinding sandbox with clickable walls and switchable algorithms (Dijkstra, A*).</li>
-          <li>KMP string matcher with live LPS table updates and match highlighting.</li>
-          <li>Composable architecture ready for SSR and testability; add your own algorithms easily.</li>
-        </ul>
-      </CardContent>
-    </Card>
-  );
-}
-
-function FooterCard() {
-  return (
-    <Card>
-      <CardContent className="py-4 text-xs text-slate-300 flex flex-wrap items-center justify-between">
-        <div>
-          © 2025 AlgoVista — Built with Next.js, Tailwind, Framer Motion, Recharts.
-        </div>
-        <div className="flex items-center gap-2">
-          <a className="underline-offset-4 hover:underline hover:text-indigo-300 transition-colors" href="https://github.com/VoxHash" target="_blank" rel="noreferrer">GitHub</a>
-          <a className="underline-offset-4 hover:underline hover:text-indigo-300 transition-colors" href="https://youtube.com/@VoxHash" target="_blank" rel="noreferrer">YouTube</a>
-        </div>
-      </CardContent>
-    </Card>
-  );
-}
+// This file exports algorithm card components and types for use in separate pages
