@@ -793,10 +793,14 @@ export function* ahoCorasickSteps(text: string, patterns: string[]): Generator<a
   for (let i = 0; i < text.length; i++) {
     const ch = text[i];
     yield { type: "compare", i, j: 0 };
-    while (node && !node.children.has(ch)) {
+    while (node && !node.children.has(ch) && node !== root) {
       node = node.fail || root;
     }
-    node = node?.children.get(ch) || root;
+    if (node && node.children.has(ch)) {
+      node = node.children.get(ch)!;
+    } else {
+      node = root;
+    }
     for (const pi of node.output) {
       yield { type: "match", index: i - patterns[pi].length + 1, pattern: pi };
     }
