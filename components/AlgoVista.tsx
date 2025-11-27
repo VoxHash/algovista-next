@@ -446,11 +446,12 @@ export function PathfindingAlgorithmCard({ algo }: { algo: PathfindingAlgo }) {
   const [start] = useState({x: 2, y: 6});
   const [goal] = useState({x: 21, y: 6});
   const [gen, setGen] = useState<Generator<any> | null>(null);
+  const genRef = useRef<Generator<any> | null>(null);
   const [state, setState] = useState<{ visit:Set<string>, relax:Set<string>, path:Set<string> }>(
     { visit: new Set(), relax: new Set(), path: new Set() }
   );
 
-  useEffect(()=>{ setGrid(makeGrid(rows, cols)); setState({visit:new Set(),relax:new Set(),path:new Set()}); setGen(null); setRunning(false); }, [rows, cols]);
+  useEffect(()=>{ setGrid(makeGrid(rows, cols)); setState({visit:new Set(),relax:new Set(),path:new Set()}); setGen(null); genRef.current = null; setRunning(false); }, [rows, cols]);
 
   const buildGen = () => {
     let g: Generator<any>;
@@ -468,12 +469,15 @@ export function PathfindingAlgorithmCard({ algo }: { algo: PathfindingAlgo }) {
       default: g = dijkstraSteps(grid, start, goal);
     }
     setGen(g);
+    genRef.current = g;
   };
   const key = (x:number,y:number)=>`${x},${y}`;
 
   const step = () => {
-    if (!gen) buildGen();
-    const { value, done } = (gen || { next: ()=>({done:true}) } as any).next();
+    if (!genRef.current) buildGen();
+    const currentGen = genRef.current;
+    if (!currentGen) return;
+    const { value, done } = currentGen.next();
     if (done) { setRunning(false); return; }
     if (value?.type === 'visit') {
       setState((s)=>({ ...s, visit: new Set(s.visit).add(key(value.x, value.y)) }));
@@ -489,7 +493,7 @@ export function PathfindingAlgorithmCard({ algo }: { algo: PathfindingAlgo }) {
     const tick=()=>{ step(); id=setTimeout(tick, speed); };
     id=setTimeout(tick, speed);
     return ()=>clearTimeout(id);
-  }, [running, speed, gen]);
+  }, [running, speed, grid, algo]);
 
   const toggleWall = (x:number,y:number) => {
     if ((x===start.x&&y===start.y)||(x===goal.x&&y===goal.y)) return;
