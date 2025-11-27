@@ -1,0 +1,15 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e1b4b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#581c87;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+  <text x="600" y="280" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="#e0e7ff" text-anchor="middle">AlgoVista</text>
+  <text x="600" y="340" font-family="Arial, sans-serif" font-size="36" fill="#c7d2fe" text-anchor="middle">Interactive Algorithm Visualizer</text>
+  <text x="600" y="400" font-family="Arial, sans-serif" font-size="24" fill="#a5b4fc" text-anchor="middle">30+ Algorithms • Sorting • Pathfinding • String Matching</text>
+  <circle cx="600" cy="500" r="40" fill="#6366f1" opacity="0.8"/>
+  <text x="600" y="510" font-family="Arial, sans-serif" font-size="32" fill="#ffffff" text-anchor="middle">⚡</text>
+</svg>
+
