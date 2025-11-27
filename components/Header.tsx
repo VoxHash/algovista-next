@@ -5,15 +5,21 @@ import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Pill } from "./AlgoVista";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
 export default function Header() {
-  const currentDate: Date = new Date();
-  const formattedDate: string = currentDate.toLocaleDateString('en-US', {
-    weekday: 'short',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
+  const [formattedDate, setFormattedDate] = useState<string>('');
+
+  useEffect(() => {
+    const currentDate: Date = new Date();
+    const formatted: string = currentDate.toLocaleDateString('en-US', {
+      weekday: 'short',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+    setFormattedDate(formatted);
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 glass-strong border-b border-white/10">
