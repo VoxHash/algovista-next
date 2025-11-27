@@ -575,7 +575,7 @@ export function PathfindingAlgorithmCard({ algo }: { algo: PathfindingAlgo }) {
 export type StringMatchingAlgo = "kmp"|"rabinkarp"|"boyermoore"|"zalgorithm"|"naivestring"|"ahocorasick"|"finiteautomaton"|"manacher"|"horspool"|"suffixarray";
 export function StringMatchingAlgorithmCard({ algo }: { algo: StringMatchingAlgo }) {
   const [text, setText] = useState("lorem ipsum dolor sit amet ipsum");
-  const [pat, setPat] = useState("ipsum");
+  const [pat, setPat] = useState(algo === "kmp" ? "ababaca" : "ipsum");
   const [matches, setMatches] = useState<number[]>([]);
   const [running, setRunning] = useState(false);
   const [speed, setSpeed] = useState(120);
